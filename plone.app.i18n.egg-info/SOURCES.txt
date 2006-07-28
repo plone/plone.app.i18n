@@ -10,4 +10,10 @@ plone.app.i18n.egg-info/not-zip-safe
 plone.app.i18n.egg-info/paster_plugins.txt
 plone.app.i18n.egg-info/top_level.txt
 plone/app/__init__.py
+plone/app/i18n/HISTORY.txt
+plone/app/i18n/INSTALL.txt
+plone/app/i18n/LICENSE.GPL
+plone/app/i18n/LICENSE.txt
+plone/app/i18n/README.txt
 plone/app/i18n/__init__.py
+plone/app/i18n/configure.zcml
