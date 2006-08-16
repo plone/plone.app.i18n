@@ -17,3 +17,15 @@ plone.app.i18n.egg-info/top_level.txt
 plone/app/__init__.py
 plone/app/i18n/__init__.py
 plone/app/i18n/configure.zcml
+plone/app/i18n/exportimport/__init__.py
+plone/app/i18n/exportimport/configure.zcml
+plone/app/i18n/exportimport/sitemanager.py
+plone/app/i18n/locales/__init__.py
+plone/app/i18n/locales/configure.zcml
+plone/app/i18n/locales/countries.py
+plone/app/i18n/locales/interfaces.py
+plone/app/i18n/locales/tests/__init__.py
+plone/app/i18n/locales/tests/test_countries.py
+plone/app/i18n/profiles/default/export_steps.xml
+plone/app/i18n/profiles/default/import_steps.xml
+plone/app/i18n/profiles/default/sitemanager.xml

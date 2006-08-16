@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="sitemanager"
+    version="20060810-01"
+    handler="plone.app.i18n.exportimport.sitemanager.importSiteManager"
+    title="Local Site Manager">
+    Import local site manager configuration.
+  </import-step>
+</import-steps>
