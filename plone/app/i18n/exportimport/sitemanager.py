@@ -53,8 +53,8 @@ class SiteManagerXMLAdapter(XMLAdapterBase):
             else:
                 self.context.registerUtility(class_attr(), interface)
 
-    def _extractUtilites(self):
-        node=self._doc.createElement('utilities')
+    def _extractUtilities(self):
+        fragment = self._doc.createDocumentFragment()
 
         gsm = getGlobalSiteManager()
         global_utilities = gsm.getAllUtilitiesRegisteredFor(Interface)
@@ -63,16 +63,18 @@ class SiteManagerXMLAdapter(XMLAdapterBase):
         for utility in utilities:
             if not utility in global_utilities:
                 child=self._doc.createElement('utility')
-                interface = _getDottedName('interface')
-                obj = _getDottedName(utility)
-                name = 'name'
+
+                interface = _getDottedName(utility.__implemented__.declared[0])
+                class_attr = _getDottedName(utility.__class__)
+                name = _getDottedName(utility.__name__)
                 child.setAttribute('interface', interface)
                 child.setAttribute('class', class_attr)
-                child.setAttribute('name', name)
+                if name:
+                    child.setAttribute('name', name)
 
-                node.appendChild(child)
+                fragment.appendChild(child)
 
-        return node
+        return fragment
 
 def dummyGetId():
     return ''
