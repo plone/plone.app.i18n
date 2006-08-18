@@ -5,18 +5,7 @@
 
 import unittest
 from Products.PloneTestCase import PloneTestCase
-
 from Testing.ZopeTestCase import ZopeDocTestSuite
-from Products.CMFPlone.interfaces import IPloneSiteRoot
-from Products.GenericSetup import EXTENSION, profile_registry
-
-profile_registry.registerProfile('default',
-    'plone.app.i18n default profile',
-    'Extension profile including plone.app.i18n configuration.',
-    'profiles/default',
-    'plone.app.i18n',
-    EXTENSION,
-    for_=IPloneSiteRoot)
 
 PloneTestCase.setupPloneSite(extension_profiles=['plone.app.i18n:default'])
 
