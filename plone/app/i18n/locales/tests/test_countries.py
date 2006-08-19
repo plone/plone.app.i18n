@@ -31,19 +31,19 @@ def testAvailableCountries():
       >>> len(countrycodes)
       1
 
-      >>> 'en' in countrycodes
+      >>> u'en' in countrycodes
       True
 
       >>> countries = util.getCountries()
       >>> len(countries)
       243
 
-      >>> de = countries['de']
-      >>> de['name']
-      'Germany'
+      >>> de = countries[u'de']
+      >>> de[u'name']
+      u'Germany'
 
-      >>> de['flag']
-      '/@@/country-flags/de.gif'
+      >>> de[u'flag']
+      u'/@@/country-flags/de.gif'
 
       >>> clearSite()
     """
