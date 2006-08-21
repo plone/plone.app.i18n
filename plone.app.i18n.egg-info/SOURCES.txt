@@ -17,6 +17,7 @@ plone.app.i18n.egg-info/top_level.txt
 plone/app/__init__.py
 plone/app/i18n/__init__.py
 plone/app/i18n/configure.zcml
+plone/app/i18n/dependencies.zcml
 plone/app/i18n/exportimport/__init__.py
 plone/app/i18n/exportimport/configure.zcml
 plone/app/i18n/exportimport/sitemanager.py
