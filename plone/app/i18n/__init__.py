@@ -1,5 +1,3 @@
-#
-
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.GenericSetup import EXTENSION, profile_registry
 

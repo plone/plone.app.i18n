@@ -4,8 +4,6 @@
 
     <five:registerPackage package="." initialize=".initialize" />
 
-    <include package=".exportimport" />
-
     <include package=".locales" />
 
     <include file="dependencies.zcml"/>
