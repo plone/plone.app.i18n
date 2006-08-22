@@ -31,3 +31,5 @@ class Countries(SimpleItem, CountryAvailability):
         """
         if isinstance(countries, list):
             self.countries = countries
+
+countries = Countries()
