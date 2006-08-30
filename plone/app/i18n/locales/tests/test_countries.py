@@ -5,13 +5,11 @@
 
 import unittest
 from Testing import ZopeTestCase
-# We need to install this before or the zcml won't be loaded during
-# installProduct('Five') being called as part of the PloneTestCase import
-ZopeTestCase.installProduct('GSLocalAddons')
 
 from Products.PloneTestCase import PloneTestCase
 from Testing.ZopeTestCase import ZopeDocTestSuite
 
+PloneTestCase.installProduct('GSLocalAddons')
 
 PloneTestCase.setupPloneSite(
     extension_profiles=['Products.GSLocalAddons:default',
