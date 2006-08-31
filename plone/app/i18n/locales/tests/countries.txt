@@ -1,0 +1,31 @@
+Country tests.
+
+  >>> from plone.app.i18n.locales.interfaces import ICountries
+  >>> from zope.component import queryUtility
+
+  # XXX We need the site to be set up during GS site creation ... trick for now
+  >>> from zope.component import getSiteManager
+  >>> sm = getSiteManager()
+  >>> sm.registerUtility(self.portal.plone_app_countries, ICountries)
+
+  >>> util = queryUtility(ICountries)
+  >>> util
+  <Countries at ...>
+
+  >>> countrycodes = util.getAvailableCountries()
+  >>> len(countrycodes)
+  1
+
+  >>> u'en' in countrycodes
+  True
+
+  >>> countries = util.getCountries()
+  >>> len(countries)
+  243
+
+  >>> de = countries[u'de']
+  >>> de[u'name']
+  u'Germany'
+
+  >>> de[u'flag']
+  u'/@@/country-flags/de.gif'

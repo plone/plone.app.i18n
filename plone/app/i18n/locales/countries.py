@@ -18,6 +18,10 @@ class Countries(SimpleItem, CountryAvailability):
     """
     implements(ICountries)
 
+    id  = 'plone_app_countries'
+    title = 'Manages available countries'
+    meta_type = 'Plone App I18N Countries'
+
     def __init__(self):
         self.countries = ['en']
 
@@ -31,5 +35,3 @@ class Countries(SimpleItem, CountryAvailability):
         """
         if isinstance(countries, list):
             self.countries = countries
-
-countries = Countries()
