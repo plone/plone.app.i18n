@@ -3,8 +3,10 @@ from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.GenericSetup import EXTENSION, profile_registry
 
 from plone.app.i18n.locales.countries import Countries
+from plone.app.i18n.locales.languages import ContentLanguages
+from plone.app.i18n.locales.languages import MetadataLanguages
 
-tools = (Countries,)
+tools = (Countries, ContentLanguages, MetadataLanguages)
 
 def initialize(context):
     """Intializer called when used as a Zope 2 product."""

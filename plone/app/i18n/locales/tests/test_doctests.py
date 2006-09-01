@@ -18,7 +18,13 @@ OPTIONFLAGS = (doctest.REPORT_ONLY_FIRST_FAILURE |
 def test_suite():
     return unittest.TestSuite((
         DocTestSuite('plone.app.i18n.locales.countries'),
+        DocTestSuite('plone.app.i18n.locales.languages'),
         Suite('countries.txt',
+            optionflags=OPTIONFLAGS,
+            package='plone.app.i18n.locales.tests',
+            test_class=paitestcase.FunctionalTestCase
+            ),
+        Suite('languages.txt',
             optionflags=OPTIONFLAGS,
             package='plone.app.i18n.locales.tests',
             test_class=paitestcase.FunctionalTestCase

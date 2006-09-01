@@ -1,0 +1,29 @@
+Language tests.
+
+  >>> from plone.app.i18n.locales.interfaces import IContentLanguages
+  >>> from plone.app.i18n.locales.interfaces import IMetadataLanguages
+  >>> from zope.component import queryUtility
+
+  >>> util = queryUtility(IContentLanguages)
+  >>> util
+  <ContentLanguages at ...>
+
+  >>> languagecodes = util.getAvailableLanguages()
+  >>> len(languagecodes)
+  1
+
+  >>> u'en' in languagecodes
+  True
+
+
+
+  >>> util = queryUtility(IMetadataLanguages)
+  >>> util
+  <MetadataLanguages at ...>
+
+  >>> languagecodes = util.getAvailableLanguages()
+  >>> len(languagecodes)
+  1
+
+  >>> u'en' in languagecodes
+  True

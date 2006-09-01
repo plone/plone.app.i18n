@@ -2,4 +2,8 @@
 <tool-setup>
  <required tool_id="plone_app_countries"
            class="plone.app.i18n.locales.countries.Countries"/>
+ <required tool_id="plone_app_content_languages"
+           class="plone.app.i18n.locales.languages.ContentLanguages"/>
+ <required tool_id="plone_app_metadata_languages"
+           class="plone.app.i18n.locales.languages.MetadataLanguages"/>
 </tool-setup>
