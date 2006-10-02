@@ -3,7 +3,9 @@
     Country tests.
 """
 
-import paitestcase
+from Products.PloneTestCase import PloneTestCase
+PloneTestCase.setupPloneSite()
+
 import unittest
 
 from zope.testing import doctest
@@ -22,11 +24,11 @@ def test_suite():
         Suite('countries.txt',
             optionflags=OPTIONFLAGS,
             package='plone.app.i18n.locales.tests',
-            test_class=paitestcase.FunctionalTestCase
+            test_class=PloneTestCase.FunctionalTestCase
             ),
         Suite('languages.txt',
             optionflags=OPTIONFLAGS,
             package='plone.app.i18n.locales.tests',
-            test_class=paitestcase.FunctionalTestCase
+            test_class=PloneTestCase.FunctionalTestCase
             )
         ))

@@ -27,7 +27,4 @@ plone/app/i18n/locales/languages.py
 plone/app/i18n/locales/tests/__init__.py
 plone/app/i18n/locales/tests/countries.txt
 plone/app/i18n/locales/tests/languages.txt
-plone/app/i18n/locales/tests/paitestcase.py
 plone/app/i18n/locales/tests/test_doctests.py
-plone/app/i18n/profiles/default/sitemanager.xml
-plone/app/i18n/profiles/default/toolset.xml
