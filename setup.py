@@ -1,14 +1,13 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1'
+version = '1.0a3'
 
 setup(name='plone.app.i18n',
       version=version,
       description="Plone specific i18n extensions.",
       long_description="""\
 """,
-      # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Framework :: Zope2'],
       keywords='Plone i18n',
       author='Plone Foundation',
@@ -20,7 +19,7 @@ setup(name='plone.app.i18n',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          # -*- Extra requirements: -*-
+        'setuptools',
       ],
       entry_points="""
       # -*- Entry points: -*-
