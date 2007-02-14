@@ -1,51 +1,53 @@
-from plone.i18n.locales.interfaces import IContentLanguageAvailability
-from plone.app.i18n.locales.browser.interfaces import ILanguageSelector
-
-from zope.interface import implements
 from zope.component import queryUtility
+from zope.interface import implements
+from zope.viewlet.interfaces import IViewlet
 
-from Products.CMFPlone import utils
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
-class ContentLanguageSelector(utils.BrowserView):
 
-    implements(ILanguageSelector)
+class LanguageSelector(BrowserView):
+    """Language selector.
+    """
+    implements(IViewlet)
 
-    def __init__(self, context, request):
-        super(LanguageSelector, self).__init__(context, request)
-        self.util = queryUtility(IContentLanguageAvailability)
+    render = ZopeTwoPageTemplateFile('languageselector.pt')
+
+    def __init__(self, context, request, view, manager):
+        super(BrowserView, self).__init__(context, request)
+        self.__parent__ = view
+        self.context = context
+        self.request = request
+        self.view = view
+        self.manager = manager
+        self.tool = getToolByName(context, 'portal_languages', None)
+        portal_tool = getToolByName(context, 'portal_url', None)
+        self.portal_url = portal_tool.getPortalObject().absolute_url()
+
+    def update(self):
+        pass
 
     def languages(self):
         """Returns list of languages."""
-        languages = self.util.getLanguages()
+        bound = self.tool.getLanguageBindings()
+        current = bound[0]
 
-        new_langs = []
-        for lang in languages:
-            if lang in self.util.getSupportedLanguages():
-                languages[lang]['selected'] = True
+        supported = self.tool.getSupportedLanguages()
+        languages = []
+        for lang in supported:
+            data = {}
+            data['code'] = lang
+            if lang == current:
+                data['selected'] = True
             else:
-                languages[lang]['selected'] = False
-            # add language-code to dict
-            langs[lang][u'code'] = lang
-            # flatten outer dict to list to make it sortable
-            new_langs.append(langs[lang])
-        
-        new_langs.sort(lambda x, y: cmp(x.get(u'native', x.get(u'name')), y.get(u'native', y.get(u'name'))))
-        return new_langs
+                data['selected'] = False
+            data['flag'] = self.tool.getFlagForLanguageCode(lang)
+            data['name'] = self.tool.getNameForLanguageCode(lang)
+            languages.append(data)
 
-    def defaultLanguages(self):
-        """Returns list of possible and selected default languages."""
-        languages = self.util.getSupportedLanguages()
-        for lang in languages:
-            if lang == self.util.getDefaultLanguage():
-                languages[lang]['selected'] = True
-            else:
-                languages[lang]['selected'] = False
         return languages
 
     def showFlags(self):
-        """Indicates if flags should be used."""
-        return self.util.showFlags()
-
-    def useCombined(self):
-        """Indicates if combined language codes should be used."""
-        return self.util.useCombined()
+        """Do we use flags?."""
+        return self.tool.showFlags()
