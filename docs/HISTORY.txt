@@ -2,8 +2,10 @@ Changelog for plone.app.i18n
 
     (name of developer listed in brackets)
 
-plone.app.i18n - 1.0a3 Unreleased
+plone.app.i18n - 1.0b1 Unreleased
+
+    - Initial implementation.
+      [hannosch]
 
     - Initial package structure.
       [zopeskel]
-

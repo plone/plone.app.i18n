@@ -1,14 +1,17 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '1.0a3'
+version = '1.0b1'
 
 setup(name='plone.app.i18n',
       version=version,
       description="Plone specific i18n extensions.",
       long_description="""\
 """,
-      classifiers=['Framework :: Zope2'],
+      classifiers=[
+        'Framework :: Plone',
+        'Framework :: Zope2',
+      ],
       keywords='Plone i18n',
       author='Plone Foundation',
       author_email='plone-developers@lists.sourceforge.net',
