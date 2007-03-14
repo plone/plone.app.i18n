@@ -3,9 +3,9 @@ from zope.interface import implements
 from zope.viewlet.interfaces import IViewlet
 
 from Products.CMFCore.interfaces import IURLTool
-from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from Products.PloneLanguageTool.interfaces import ILanguageTool
 
 
 class LanguageSelector(BrowserView):
@@ -22,7 +22,7 @@ class LanguageSelector(BrowserView):
         self.request = request
         self.view = view
         self.manager = manager
-        self.tool = getToolByName(context, 'portal_languages', None)
+        self.tool = queryUtility(ILanguageTool)
         portal_tool = queryUtility(IURLTool)
         self.portal_url = portal_tool.getPortalObject().absolute_url()
 
