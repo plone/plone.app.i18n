@@ -24,7 +24,4 @@ setup(name='plone.app.i18n',
       install_requires=[
         'setuptools',
       ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
       )
