@@ -8,7 +8,7 @@ from zope.interface import implements
 from OFS.SimpleItem import SimpleItem
 
 class Countries(SimpleItem, CountryAvailability):
-    """A local utility storing a list of available coutries.
+    """A local utility storing a list of available countries.
 
     Let's make sure that this implementation actually fulfills the API.
 
