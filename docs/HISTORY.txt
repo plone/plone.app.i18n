@@ -2,6 +2,13 @@ Changelog for plone.app.i18n
 
     (name of developer listed in brackets)
 
+plone.app.i18n - 1.0b3 Unreleased
+
+    - Use getToolByName instead of getUtility again. Updated language chooser
+      viewlet to be more defensive, when there's no language tool available.
+      This closes https://dev.plone.org/plone/ticket/6559.
+      [hannosch]
+
 plone.app.i18n - 1.0b2 Released March 23, 2007
 
     - Replaced getToolByName with getUtility.

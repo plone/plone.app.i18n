@@ -1,11 +1,9 @@
-from zope.component import queryUtility
 from zope.interface import implements
 from zope.viewlet.interfaces import IViewlet
 
-from Products.CMFCore.interfaces import IURLTool
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from Products.PloneLanguageTool.interfaces import ILanguageTool
 
 
 class LanguageSelector(BrowserView):
@@ -22,8 +20,8 @@ class LanguageSelector(BrowserView):
         self.request = request
         self.view = view
         self.manager = manager
-        self.tool = queryUtility(ILanguageTool)
-        portal_tool = queryUtility(IURLTool)
+        self.tool = getToolByName(context, 'portal_languages', None)
+        portal_tool = getToolByName(context, 'portal_url')
         self.portal_url = portal_tool.getPortalObject().absolute_url()
 
     def update(self):
@@ -31,6 +29,9 @@ class LanguageSelector(BrowserView):
 
     def languages(self):
         """Returns list of languages."""
+        if self.tool is None:
+            return []
+
         bound = self.tool.getLanguageBindings()
         current = bound[0]
 
@@ -51,4 +52,6 @@ class LanguageSelector(BrowserView):
 
     def showFlags(self):
         """Do we use flags?."""
-        return self.tool.showFlags()
+        if self.tool is not None:
+            return self.tool.showFlags()
+        return False
