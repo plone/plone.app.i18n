@@ -27,6 +27,11 @@ class LanguageSelector(BrowserView):
     def update(self):
         pass
 
+    def available(self):
+        if self.tool.use_cookie_negotiation:
+            return True
+        return False
+
     def languages(self):
         """Returns list of languages."""
         if self.tool is None:

@@ -2,7 +2,20 @@ Changelog for plone.app.i18n
 
     (name of developer listed in brackets)
 
-plone.app.i18n - 1.0b3 Unreleased
+plone.app.i18n - 1.0b4 Unreleased
+
+    - Only show the language selector viewlet when cookie language negotiation
+      is enabled.
+      [hannosch]
+
+plone.app.i18n - 1.0b3 Released May 1, 2007
+
+    - Added id to language selector markup. Moved language selector to the
+      right side in the breadcrumbs line.
+      [fschulze]
+
+    - Fixed spelling error.
+      [wichert]
 
     - Use getToolByName instead of getUtility again. Updated language chooser
       viewlet to be more defensive, when there's no language tool available.
