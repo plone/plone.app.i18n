@@ -4,6 +4,10 @@ Changelog for plone.app.i18n
 
 plone.app.i18n - 1.0b4 Unreleased
 
+    - Removed some left over tool init stuff. The local utilities are not used
+      as tools anymore.
+      [hannosch]
+
     - Only show the language selector viewlet when cookie language negotiation
       is enabled.
       [hannosch]
