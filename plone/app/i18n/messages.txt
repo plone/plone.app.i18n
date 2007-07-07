@@ -1,6 +1,20 @@
 Messsages
 =========
 
+lame pts setup
+--------------
+
+Alas we need to re-register PTS because the tear-down after the unit tests
+will clear the component architecture registry.
+
+  >>> cp = self.app.Control_Panel
+  >>> from zope.component import provideUtility
+  >>> from Products.PlacelessTranslationService.interfaces import IPlacelessTranslationService
+  >>> provideUtility(cp.TranslationService, IPlacelessTranslationService)
+
+story
+-----
+
 A Plone site has many translation domains available.  By default,
 they're all global, but they can be overridden, so to allow through
 the web customization of translations by the user.
@@ -37,25 +51,37 @@ We can query for existing messages to identify message ids that we
 want to translate.  E.g. the message id for 'April' is 'month_apr',
 but users don't know about ids.
 
-  >>> messages.query_message(query=u'April', language='da')
-  <Message month_apr>
-
-  >>> messages.query_message(query=u'Thanks for using our product, we hope '
-  ...                        'you like it!', language='en')
-  <Message front-text>
+  >>> from pprint import pprint
+  >>> pprint(messages.query_message(query=u'April', language='da')) # doctest: +ELLIPSIS
+  [{'domain': 'plonelocales',
+    'language': 'da',
+    'mod_time': ...,
+    'msgid': u'month_apr',
+    'msgstr': u'April'}]  
+  >>> pprint(messages.query_message(query=u'Thanks for using our product, we hope '
+  ...                               'you like it!', language='en')) # doctest: +ELLIPSIS
+  [{'domain': 'frontpages',
+    'language': 'en',
+    'mod_time': ...,
+    'msgid': u'frontpage-text',
+    'msgstr': u'...Thanks for using our product...'}]  
 
 A more complex example.  Here, HTML tags are omitted when searching,
 because users don't see these as well:
 
-  >>> messages.query_message("""
+  >>> pprint(messages.query_message("""
   ... By default, Plone uses a visual editor for content. (If you prefer
   ... text-based syntax and/or wiki syntax, you can change this in the markup
   ... control panel)
-  ... """, language='en')
-  <Message front-text>
+  ... """, language='en')) # doctest: +ELLIPSIS
+  [{'domain': 'frontpages',
+    'language': 'en',
+    'mod_time': ...,
+    'msgid': u'frontpage-text',
+    'msgstr': u'...Plone uses a visual editor...'}]  
 
 This won't match.  We have the words in the wrong order:
 
-  >>> message.query_message("By Plone, default visual uses content.",
-  ...                       language='en') is None
-  True
+  >>> messages.query_message("By Plone, default visual uses content.",
+  ...                        language='en')
+  []

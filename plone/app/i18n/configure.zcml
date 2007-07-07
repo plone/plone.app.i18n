@@ -20,5 +20,13 @@
       <require permission="cmf.ManagePortal"
 	       attributes="setMessage getMessageIds" />
     </class>
-  
+
+    <!-- factories to adapt translation domains to IListMessages -->
+
+    <adapter factory=".messages.PTSTranslationDomainMessagesLister" />
+
+    <adapter factory=".messages.GlobalTranslationDomainMessagesLister" />
+
+    <adapter factory=".messages.LocalTranslationDomainMessagesLister" />
+    
 </configure>
