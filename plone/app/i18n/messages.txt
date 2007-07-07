@@ -26,7 +26,8 @@ Add a custom translation for this message.
 
 This should register a local translation domain. Let's get it.
   
-  >>> local_domain = component.getUtility(ITranslationDomain, name='plonelocales')
+  >>> local_domain = component.getUtility(ITranslationDomain,
+  ...                                     name='plonelocales')
   >>> local_domain is not domain
   True
   >>> local_domain.translate(u'month_apr', target_language='da')

@@ -14,7 +14,7 @@ def customize_translation(msgid, msg, domain, language):
         translationdomain = TranslationDomain()
         translationdomain.domain = domain
         sm = getSiteManager()
-        sm.registerUtility(translationdomain, ILocalTranslationDomain)
+        sm.registerUtility(translationdomain, ITranslationDomain, name=domain)
 
     # lookup message catalog for this language
     translationdomain.addMessage(msgid, msg, language)
