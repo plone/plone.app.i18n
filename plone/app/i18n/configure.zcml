@@ -5,5 +5,20 @@
     <include package=".locales" />
 
     <include file="dependencies.zcml"/>
+    
+    <!-- this is copied in from zope.app.i18n -->
 
+    <utility provides="zope.component.interfaces.IFactory"
+	     component="zope.app.i18n.messagecatalog.MessageCatalog"
+	     name="zope.app.MessageCatalog" />	     
+    
+    <class class="zope.app.i18n.messagecatalog.MessageCatalog">
+      <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+      
+      <require permission="zope2.View"
+	       interface="zope.i18n.interfaces.IMessageCatalog" />
+      <require permission="cmf.ManagePortal"
+	       attributes="setMessage getMessageIds" />
+    </class>
+  
 </configure>

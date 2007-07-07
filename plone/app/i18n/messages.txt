@@ -13,3 +13,21 @@ look up 'April' in Danish:
   >>> domain = component.getUtility(ITranslationDomain, name='plonelocales')
   >>> domain.translate(u'month_apr', target_language='da')
   u'april'
+
+Add a custom translation for this message.
+  
+  >>> from plone.app.i18n.messages import customize_translation
+
+  >>> customize_translation(msgid=u'month_apr',
+  ...                       msg=u'April',
+  ...			    domain='plonelocales',
+  ...			    language='da')
+
+
+This should register a local translation domain. Let's get it.
+  
+  >>> local_domain = component.getUtility(ITranslationDomain, name='plonelocales')
+  >>> local_domain is not domain
+  True
+  >>> local_domain.translate(u'month_apr', target_language='da')
+  u'April'
