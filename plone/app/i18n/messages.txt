@@ -1,0 +1,15 @@
+Messsages
+=========
+
+A Plone site has many translation domains available.  By default,
+they're all global, but they can be overridden, so to allow through
+the web customization of translations by the user.
+
+By default, we have 'plonelocales' translation domain.  Let's try and
+look up 'April' in Danish:
+
+  >>> from zope import component
+  >>> from zope.i18n.interfaces import ITranslationDomain
+  >>> domain = component.getUtility(ITranslationDomain, name='plonelocales')
+  >>> domain.translate(u'month_apr', target_language='da')
+  u'april'
