@@ -1,66 +1,58 @@
-def strip_ml_tags(in_text):
-    # Routine by Micah D. Cochran
-    # Submitted on 26 Aug 2005
-    # This routine is allowed to be put under any license Open Source (GPL, BSD, LGPL, etc.) License 
-    # or any Propriety License. Effectively this routine is in public domain. Please attribute where appropriate.
-    
-    """Description: Removes all HTML/XML-like tags from the input text.
-    Inputs: s --> string of text
-    Outputs: text string without the tags
-    
-    # doctest unit testing framework
-    
-    >>> test_text = "Keep this Text <remove><me /> KEEP </remove> 123"
-    >>> strip_ml_tags(test_text)
-    'Keep this Text  KEEP  123'
-    """
+import re
 
-    # convert in_text to a mutable object (e.g. list)
-    s_list = list(in_text)
-    i,j = 0,0
-    
-    while i < len(s_list):
-        # iterate until a left-angle bracket is found
-        if s_list[i] == '<':
-            while s_list[i] != '>':
-                # pop everything from the the left-angle bracket until the right-angle bracket
-                s_list.pop(i)
-                
-            # pops the right-angle bracket, too
-            s_list.pop(i)
-        else:
-            i=i+1
-                
-    # convert the list back into text
-    join_char=''
-    return join_char.join(s_list)
-    
 def match(msg, query):
     """
-    Case-insensitive query matching method.
+    Case-insensitive fuzzy string matching. The use-cases are primarily
+    variable interpolation and matching text appearing inside tags.
+
+    The methods returns the accuracy of the match.
+
+    Let's try a few simple matches.
     
-    >>> match('Match me!', 'match')
-    True
+    >>> match('Match me', 'match')
+    1.0
 
-    >>> match('Match me!', 'me')
-    True
+    >>> match('Match me', 'me')
+    1.0
 
-    >>> match('Match me!', 'match me')
-    True
+    >>> match('Match me', 'match me')
+    1.0
 
-    >>> match('Mathe me!', 'me match')
-    False
+    Out-of-order words count as mismatches. The weight of a mismatch is
+    proportional to the word length.
+
+    >>> match('Match me', 'me match')
+    0.375
+ 
+    Words need not appear next to each other as long as the
+    order is correct:
+
+    >>> match('abc def ghi jkl mno prq stu vxy', 'def mno')
+    1.0
     
+    Non-matched words count negatively:
+
+    >>> match('abc def ghi jkl mno prq stu vxy', 'zzz def mno')   # doctest: +ELLIPSIS
+    0.72...
+    
+    >>> match('${count} item(s) renamed.', '23 item(s) renamed.') # doctest: +ELLIPSIS
+    0.89...
+
+    >>> match('Ignore <span class=\"discreet\">tags</span>', 'Ignore tags')
+    1.0
+
     """
 
-    msg = strip_ml_tags(msg.lower())
-    query = strip_ml_tags(query.lower())
+    # fuzzy matching word by word
+    words = filter(None, re.split(r"[\s,+=\-/\*!]", query.lower()))
+    msg = msg.lower()
     
-    return query in msg
-
-def _test():
-    import doctest
-    doctest.testmod()
-
-if __name__ == "__main__":
-    _test()
+    i = 0
+    non_matched = ''
+    for word in words:
+        try:
+            i = msg.index(word, i)
+        except ValueError:
+            non_matched += word
+        
+    return 1-float(len(non_matched))/len(query)

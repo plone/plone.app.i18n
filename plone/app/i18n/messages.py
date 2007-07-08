@@ -13,6 +13,8 @@ from Products.PlacelessTranslationService.GettextMessageCatalog import translati
 
 from utils import match
 
+query_accuracy_threshold = 0.8
+
 def customize_translation(msgid, msg, domain, language):
     translationdomain = component.getUtility(ITranslationDomain, name=domain)
 
@@ -27,12 +29,12 @@ def customize_translation(msgid, msg, domain, language):
     # lookup message catalog for this language
     translationdomain.addMessage(msgid, msg, language)
 
-
 def query_message(query, language):
     result = []
     for name, util in component.getUtilitiesFor(ITranslationDomain):
         for message in IListMessages(util).filter(language):
-            if match(message['msgstr'], query):
+            accuracy = match(message['msgstr'], query)
+            if accuracy > query_accuracy_threshold:
                 result.append(message)
     return result
 
@@ -103,6 +105,7 @@ class GlobalTranslationDomainMessagesLister(object):
             for msgid, msgstr in catalog._catalog._catalog.items():
                 if msgid == '':
                     continue
+
                 yield dict(msgid=msgid,
                            msgstr=msgstr,
                            domain=self.td.domain,
