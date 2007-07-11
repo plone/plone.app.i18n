@@ -1,32 +1,44 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:five="http://namespaces.zope.org/five">
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   xmlns:five="http://namespaces.zope.org/five">
 
-    <include package=".locales" />
-
-    <include file="dependencies.zcml"/>
+  <include package=".locales" />
+  
+  <include file="dependencies.zcml"/>
+  
+  <!-- this is copied in from zope.app.i18n -->
+  
+  <utility provides="zope.component.interfaces.IFactory"
+	   component="zope.app.i18n.messagecatalog.MessageCatalog"
+	   name="zope.app.MessageCatalog" />	     
+  
+  <class class="zope.app.i18n.messagecatalog.MessageCatalog">
+    <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
     
-    <!-- this is copied in from zope.app.i18n -->
-
-    <utility provides="zope.component.interfaces.IFactory"
-	     component="zope.app.i18n.messagecatalog.MessageCatalog"
-	     name="zope.app.MessageCatalog" />	     
-    
-    <class class="zope.app.i18n.messagecatalog.MessageCatalog">
-      <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-      
-      <require permission="zope2.View"
-	       interface="zope.i18n.interfaces.IMessageCatalog" />
-      <require permission="cmf.ManagePortal"
-	       attributes="setMessage getMessageIds" />
-    </class>
-
-    <!-- factories to adapt translation domains to IListMessages -->
-
-    <adapter factory=".messages.PTSTranslationDomainMessagesLister" />
-
-    <adapter factory=".messages.GlobalTranslationDomainMessagesLister" />
-
-    <adapter factory=".messages.LocalTranslationDomainMessagesLister" />
-    
+    <require permission="zope2.View"
+	     interface="zope.i18n.interfaces.IMessageCatalog" />
+    <require permission="cmf.ManagePortal"
+	     attributes="setMessage getMessageIds" />
+  </class>
+  
+  <!-- factories to adapt translation domains to IListMessages -->
+  
+  <adapter factory=".messages.PTSTranslationDomainMessagesLister" />
+  
+  <adapter factory=".messages.GlobalTranslationDomainMessagesLister" />
+  
+  <adapter factory=".messages.LocalTranslationDomainMessagesLister" />
+  
+  <!-- control panel -->
+  
+  <adapter factory=".controlpanel.TranslationsControlPanelAdapter" />
+  
+  <browser:page
+     name="translations-controlpanel"
+     for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+     class=".controlpanel.TranslationsControlPanel"
+     permission="cmf.ManagePortal"
+     />
+  
 </configure>
