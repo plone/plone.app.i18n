@@ -1,5 +1,11 @@
 import re
 
+def make_msg_token(domain, msgid):
+    return '%s:%s' % (domain, msgid)
+
+def split_msg_token(token):
+    return token.split(':')
+
 def match(msg, query):
     """
     Case-insensitive fuzzy string matching. The use-cases are primarily
@@ -40,7 +46,7 @@ def match(msg, query):
 
     >>> match('Ignore <span class=\"discreet\">tags</span>', 'Ignore tags')
     1.0
-
+    
     """
 
     # fuzzy matching word by word

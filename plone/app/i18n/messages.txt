@@ -94,3 +94,17 @@ the message is composed in HTML.
     'mod_time': ...,
     'msgid': u'front-text',
     'msgstr': u'...Prima di cominciare a esplorare...'}]
+
+We can also query message ids (for technical users):
+
+  >>> pprint(messages.query_message(query=u'month_jan', language='da'))
+  [{'domain': 'plone',
+    'language': 'da',
+    'mod_time': 0,
+    'msgid': u'month_jan_abbr',
+    'msgstr': u'jan'},
+   {'domain': 'plone',
+    'language': 'da',
+    'mod_time': 0,
+    'msgid': u'month_jan',
+    'msgstr': u'januar'}]

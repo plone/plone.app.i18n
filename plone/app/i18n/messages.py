@@ -12,6 +12,7 @@ from Products.PlacelessTranslationService.interfaces import IPlacelessTranslatio
 from Products.PlacelessTranslationService.GettextMessageCatalog import translationRegistry
 
 from utils import match
+from utils import make_msg_token
 
 query_accuracy_threshold = 0.8
 
@@ -26,16 +27,27 @@ def customize_translation(msgid, msg, domain, language):
         sm = getSiteManager()
         sm.registerUtility(translationdomain, ITranslationDomain, name=domain)
 
-    # lookup message catalog for this language
+    # add message to td
     translationdomain.addMessage(msgid, msg, language)
 
 def query_message(query, language):
+    tokens = []
     result = []
     for name, util in component.getUtilitiesFor(ITranslationDomain):
         for message in IListMessages(util).filter(language):
-            accuracy = match(message['msgstr'], query)
+            # keep track of domain/msgid combinations (tokens) already added
+            token = make_msg_token(message['domain'], message['msgid'])
+            if token in tokens:
+                continue
+
+            msg = message['msgid'] + " " + message['msgstr']
+            accuracy = match(msg, query)
+            
             if accuracy > query_accuracy_threshold:
-                result.append(message)
+                if token not in tokens:
+                    result.append(message)
+                    tokens.append(token)
+
     return result
 
 class IListMessages(interface.Interface):
