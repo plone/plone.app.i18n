@@ -30,6 +30,9 @@ def customize_translation(msgid, msg, domain, language):
     # add message to td
     translationdomain.addMessage(msgid, msg, language)
 
+    # work-around for bug in zope.app.i18n.translationdomain
+    translationdomain[language].domain = domain
+
 def query_message(query, language):
     tokens = []
     result = []
