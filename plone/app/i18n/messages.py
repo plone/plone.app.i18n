@@ -25,15 +25,22 @@ def customize_translation(msgid, msg, domain, language):
         translationdomain = TranslationDomain()
         translationdomain.domain = domain
         sm = getSiteManager()
-        sm.registerUtility(translationdomain, ITranslationDomain, name=domain)
+        sm.registerUtility(translationdomain, ILocalTranslationDomain, name=domain)
 
     # add message to td
     translationdomain.addMessage(msgid, msg, language)
 
+import logging
+
 def query_message(query, language):
     tokens = []
     result = []
-    for name, util in component.getUtilitiesFor(ITranslationDomain):
+
+    # get translation domains, local first
+    tds = [td for name, td in component.getUtilitiesFor(ILocalTranslationDomain)] + \
+          list(component.getAllUtilitiesRegisteredFor(ITranslationDomain))
+
+    for util in tds:
         for message in IListMessages(util).filter(language):
             # keep track of domain/msgid combinations (tokens) already added
             token = make_msg_token(message['domain'], message['msgid'])

@@ -12,6 +12,12 @@ will clear the component architecture registry.
   >>> from Products.PlacelessTranslationService.interfaces import IPlacelessTranslationService
   >>> provideUtility(cp.TranslationService, IPlacelessTranslationService)
 
+lame request setup
+------------------
+
+  >>> from plone.app.i18n.tests import TestRequest
+  >>> request = TestRequest("en")
+  
 add custom translation
 ----------------------
 
@@ -43,9 +49,20 @@ This should register a local translation domain. Let's get it.
   ...                                     name='plonelocales')
   >>> local_domain is not domain
   True
+
   >>> local_domain.translate(u'month_apr', target_language='da')
   u'April'
 
+Let's see how zope.i18n's generic translate method works. We'll want our customizations
+to take precedence while preserving a fallback to the global domains if the message
+does not exist in our local domain:
+  
+  >>> from zope.i18n import translate
+  >>> translate(u'month_apr', domain='plonelocales', context=request, target_language='da')
+  u'April'
+  >>> translate(u'month_jan', domain='plonelocales', context=request, target_language='da')
+  u'januar'
+  
 query existing translations
 ---------------------------
 
@@ -55,16 +72,16 @@ but users don't know about ids.
 
   >>> from pprint import pprint
   >>> pprint(messages.query_message(query=u'April', language='da')) # doctest: +ELLIPSIS
-  [{'domain': 'plone',
-    'language': 'da',
-    'mod_time': 0,
-    'msgid': u'month_apr',
-    'msgstr': u'april'},
-   {'domain': 'plonelocales',
+  [{'domain': 'plonelocales',
     'language': 'da',
     'mod_time': ...,
     'msgid': u'month_apr',
-    'msgstr': u'April'}]  
+    'msgstr': u'April'},
+   {'domain': 'plone',
+    'language': 'da',
+    'mod_time': 0,
+    'msgid': u'month_apr',
+    'msgstr': u'april'}]
 
 We won't be able to query default strings since they're not registered as translations:
     
@@ -107,4 +124,14 @@ We can also query message ids (for technical users):
     'language': 'da',
     'mod_time': 0,
     'msgid': u'month_jan',
-    'msgstr': u'januar'}]
+    'msgstr': u'januar'},
+   {'domain': u'plonelocales',
+    'language': u'da',
+    'mod_time': 0,
+    'msgid': u'month_jan',
+    'msgstr': u'januar'},
+   {'domain': u'plonelocales',
+    'language': u'da',
+    'mod_time': 0,
+    'msgid': u'month_jan_abbr',
+    'msgstr': u'jan'}]
