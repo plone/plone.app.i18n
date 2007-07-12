@@ -30,8 +30,6 @@ def customize_translation(msgid, msg, domain, language):
     # add message to td
     translationdomain.addMessage(msgid, msg, language)
 
-import logging
-
 def query_message(query, language):
     tokens = []
     result = []
