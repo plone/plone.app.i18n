@@ -77,9 +77,6 @@ class TranslationsControlPanelAdapter(SchemaAdapterBase):
     adapts(IPloneSiteRoot)
     implements(ITranslationsSchema)
 
-    def __init__(self, context):
-        super(TranslationsControlPanelAdapter, self).__init__(context)
-        
     def get_language(self):
         ltool = getToolByName(self.context, 'portal_languages')
         return ltool.getDefaultLanguage()

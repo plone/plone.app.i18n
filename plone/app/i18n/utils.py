@@ -6,6 +6,9 @@ def make_msg_token(domain, msgid):
 def split_msg_token(token):
     return token.split(':')
 
+def normalize_language_token(l):
+    return l.lower().replace('_', '-')
+
 def match(msg, query):
     """
     Case-insensitive fuzzy string matching. The use-cases are primarily

@@ -11,8 +11,13 @@ from Products.PlacelessTranslationService.utility import PTSTranslationDomain
 from Products.PlacelessTranslationService.interfaces import IPlacelessTranslationService
 from Products.PlacelessTranslationService.GettextMessageCatalog import translationRegistry
 
+import sys
+_pts = sys.modules['Products.PlacelessTranslationService.PlacelessTranslationService']
+catalogRegistry = _pts.catalogRegistry
+
 from utils import match
 from utils import make_msg_token
+from utils import normalize_language_token
 
 query_accuracy_threshold = 0.8
 
@@ -82,33 +87,31 @@ class PTSTranslationDomainMessagesLister(object):
         self.td = td
         
     def __iter__(self):
-        domain = self.td.domain
-        mod_time = 0
-        
         pts = component.getUtility(IPlacelessTranslationService)
 
-        import sys
-        _pts = sys.modules['Products.PlacelessTranslationService.PlacelessTranslationService']
-        catalogRegistry = _pts.catalogRegistry
-        
         for (ccode, cdomain), cnames in catalogRegistry.items():
-            if cdomain != domain:
+            if cdomain != self.td.domain:
                 continue
 
             for cname in cnames:
                 catalog = pts._getOb(cname)
-                for msgid, msgstr in translationRegistry[catalog.getId()]._catalog.items():
-                    if msgid == '':
-                        continue
-                    yield dict(msgid=msgid,
-                               msgstr=msgstr,
-                               domain=self.td.domain,
-                               language=ccode,
-                               mod_time=mod_time)
+                yield ccode, translationRegistry[catalog.getId()]._catalog
 
     def filter(self, language):
-        return (message for message in self
-                if message['language'] == language)
+        token = normalize_language_token(language)
+        mod_time = 0
+
+        for lang, catalog in self:
+            if normalize_language_token(lang) != token: continue
+
+            for msgid, msgstr in catalog.items():
+                if msgid == '': continue
+
+                yield dict(msgid=msgid,
+                           msgstr=msgstr,
+                           domain=self.td.domain,
+                           language=language,
+                           mod_time=mod_time)
 
 class GlobalTranslationDomainMessagesLister(object):
     interface.implements(IListMessages)
@@ -133,9 +136,9 @@ class GlobalTranslationDomainMessagesLister(object):
                            mod_time=mod_time)
 
     def filter(self, language):
-        return (message for message in self
-                if message['language'] == language)
-    
+        token = normalize_language_token(language)
+        return (message for message in self if \
+                normalize_language_token(message['language']) == token)    
 
 class LocalTranslationDomainMessagesLister(object):
     interface.implements(IListMessages)
@@ -148,6 +151,6 @@ class LocalTranslationDomainMessagesLister(object):
         return (message for message in self.td.getMessages())
 
     def filter(self, language):
-        return (message for message in self
-                if message['language'] == language)
-
+        token = normalize_language_token(language)
+        return (message for message in self if \
+                normalize_language_token(message['language']) == token)
