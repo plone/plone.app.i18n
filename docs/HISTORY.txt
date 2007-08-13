@@ -2,6 +2,11 @@ Changelog for plone.app.i18n
 
     (name of developer listed in brackets)
 
+plone.app.i18n - 1.0 Released August 13, 2007
+
+    - No changes.
+      [hannosch]
+
 plone.app.i18n - 1.0rc1 Released July 9, 2007
 
     - Removed some left over tool init stuff. The local utilities are not used
