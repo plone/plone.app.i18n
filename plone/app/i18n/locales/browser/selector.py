@@ -14,7 +14,7 @@ class LanguageSelector(BrowserView):
     render = ZopeTwoPageTemplateFile('languageselector.pt')
 
     def __init__(self, context, request, view, manager):
-        super(BrowserView, self).__init__(context, request)
+        super(LanguageSelector, self).__init__(context, request)
         self.__parent__ = view
         self.context = context
         self.request = request
