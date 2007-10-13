@@ -1,14 +1,14 @@
 import re
 
-def make_msg_token(domain, msgid):
-    return '%s:%s' % (domain, msgid)
+def make_token(domain, value):
+    return '%s:%s' % (domain, value)
 
-def split_msg_token(token):
+def split_token(token):
     return token.split(':')
 
 def normalize_language_token(l):
     return l.lower().replace('_', '-')
-
+    
 def match(msg, query):
     """
     Case-insensitive fuzzy string matching. The use-cases are primarily
@@ -51,6 +51,10 @@ def match(msg, query):
     1.0
     
     """
+
+    # the empty query always matches
+    if not query:
+        return 1
 
     # fuzzy matching word by word
     words = filter(None, re.split(r"[\s,+=\-/\*!]", query.lower()))

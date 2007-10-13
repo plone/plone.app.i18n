@@ -14,6 +14,12 @@ from zope.publisher.browser import TestRequest as ZopeTestRequest
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.publisher.interfaces.browser import IBrowserRequest
 
+from zope.testing import doctest
+
+OPTIONFLAGS = (doctest.REPORT_ONLY_FIRST_FAILURE |
+#               doctest.ELLIPSIS |
+               doctest.NORMALIZE_WHITESPACE)
+
 class TestRequest(ZopeTestRequest):
     implements(IHTTPRequest, IAttributeAnnotatable, IBrowserRequest)
 
@@ -28,6 +34,7 @@ def test_suite():
     return unittest.TestSuite((
         ZopeDocFileSuite(
             'messages.txt',
+            optionflags=OPTIONFLAGS,
             test_class=ptc.PloneTestCase,
             ),
         DocTestSuite(

@@ -32,7 +32,21 @@
   
   <!-- control panel -->
   
-  <adapter factory=".controlpanel.TranslationsControlPanelAdapter" />
+  <adapter for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+           provides=".controlpanel.ITranslationQuerySchema"
+	   factory=".controlpanel.TranslationsControlPanelAdapter" />
+  
+  <adapter for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+           provides=".controlpanel.ITranslationQueryResultSchema"
+	   factory=".controlpanel.TranslationsControlPanelAdapter" />
+  
+  <adapter for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+	   provides=".controlpanel.IManageTranslationsSchema"
+	   factory=".controlpanel.TranslationsControlPanelAdapter" />
+  
+  <adapter for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+           provides=".controlpanel.ITranslationsSchema"
+	   factory=".controlpanel.TranslationsControlPanelAdapter" />
   
   <browser:page
      name="translations-controlpanel"
@@ -40,5 +54,7 @@
      class=".controlpanel.TranslationsControlPanel"
      permission="cmf.ManagePortal"
      />
-  
+
+  <adapter factory=".messages.LocalTranslationDomainAdapter" />
+
 </configure>

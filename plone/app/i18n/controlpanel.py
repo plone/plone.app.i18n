@@ -6,31 +6,36 @@ from zope.component import adapts
 
 import zope.cachedescriptors.property
 
-from Acquisition import aq_inner
-
 from zope.schema import TextLine
 from zope.schema import Choice
+from zope.schema import Bool
 
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 
 from zope.formlib import form
 
-from zope.app.form.browser import RadioWidget
-
-from Products.CMFCore.utils import getToolByName
-from Products.CMFDefault.formlib.schema import ProxyFieldProperty
-from Products.CMFDefault.formlib.schema import SchemaAdapterBase
+from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.CMFPlone.interfaces import IPloneSiteRoot
 from Products.CMFPlone.utils import safe_unicode
 
+from zope.app.form.browser import RadioWidget
+
+from Products.CMFCore.utils import getToolByName
+
+from Products.CMFDefault.formlib.schema import ProxyFieldProperty
+from Products.CMFDefault.formlib.schema import SchemaAdapterBase
+
 from plone.app.controlpanel.form import ControlPanelForm
-from plone.app.i18n.messages import query_message, customize_translation
 from plone.app.form.widgets import LanguageDropdownChoiceWidget
+
+from Acquisition import aq_inner
 
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
-from utils import make_msg_token, split_msg_token
+from utils import make_token, split_token
+from export import po_export
+from interfaces import ICustomizableTranslationsTool
 
 class SearchResultsWidget(RadioWidget):
     _displayItemForMissingValue = False
@@ -50,9 +55,15 @@ class ITranslationQuerySchema(Interface):
                       vocabulary="plone.app.vocabularies.SupportedContentLanguages")
 
     query = TextLine(title=_(u'Query'),
-                     description=_(u"Enter a search string to find existing translation messages."),
+                     description=_(u"Enter a search string to find translation messages. "
+                                   "You can leave this field empty and retrieve all messages "
+                                   "if you choose to query custom translations only."),
                      required=False,
                      default=u'')
+
+    local_only = Bool(title=_(u'Custom translations only'),
+                      required=False,
+                      description=_(u'Search custom translation messages only.'))
 
 class ITranslationQueryResultSchema(Interface):
     result = Choice(title=_(u'Search results'),
@@ -66,7 +77,10 @@ class ITranslationQueryResultSchema(Interface):
                      default=u'')
 
 class IManageTranslationsSchema(Interface):
-    pass
+    domain = Choice(title=_(u'Domains'),
+                    description=_(u'Choose a local translation domain'),
+                    required=False,
+                    vocabulary="plone.app.i18n.vocabularies.LocalTranslationDomains")
 
 class ITranslationsSchema(ITranslationQuerySchema,
                           ITranslationQueryResultSchema,
@@ -74,9 +88,9 @@ class ITranslationsSchema(ITranslationQuerySchema,
     """Combined schema for the adapter lookup."""
     
 class TranslationsControlPanelAdapter(SchemaAdapterBase):
-    adapts(IPloneSiteRoot)
-    implements(ITranslationsSchema)
-
+    def __init__(self, context):
+        super(TranslationsControlPanelAdapter, self).__init__(context)
+        
     def get_language(self):
         ltool = getToolByName(self.context, 'portal_languages')
         return ltool.getDefaultLanguage()
@@ -85,12 +99,11 @@ class TranslationsControlPanelAdapter(SchemaAdapterBase):
         pass
 
     query = ''
-
     translation = ''
-    
     language = property(get_language,
                         set_language)    
-    
+    local_only = False
+    domain = ''
     result = ''
 
 managetranslationsset = FormFieldsets(IManageTranslationsSchema)
@@ -137,7 +150,7 @@ class TranslationsControlPanel(ControlPanelForm):
     def actions(self):
         return list(self.managetranslations_actions)+list(self.translationquery_actions)
 
-    @form.action(_(u'Save translation'), translationquery_actions)
+    @form.action(_(u'Save'), translationquery_actions)
     def handle_add(self, action, data):
         language = data['language']
 
@@ -149,22 +162,53 @@ class TranslationsControlPanel(ControlPanelForm):
             # try running a query instead
             return self.handle_query.success(data)
             
-        domain, msgid = split_msg_token(token)
+        domain, msgid = split_token(token)
 
         # register translation
-        customize_translation(msgid, translation, domain, language)
+        portal = getToolByName(self.context, 'portal_url').getPortalObject()
+        tool = ICustomizableTranslationsTool(portal)
+        tool.addMessage(msgid, translation, domain, language)
 
         self.status = _(u'Translation customized.')
             
     handle_add.visible_condition = lambda form, action: form.show_search_results
 
+    @form.action(_(u'Delete'), translationquery_actions)
+    def handle_delete(self, action, data):
+        language = data['language']
+
+        try:
+            # we need to get these directly from the request
+            token = self.request['form.result']
+            translation = self.request['form.translation']
+        except:
+            # try running a query instead
+            return self.handle_query.success(data)
+            
+        domain, msgid = split_token(token)
+
+        # remove message
+        portal = getToolByName(self.context, 'portal_url').getPortalObject()
+        tool = ICustomizableTranslationsTool(portal)
+        tool.removeMessage(msgid, domain, language)
+
+        self.status = _(u'Translation deleted.')
+
+    handle_delete.visible_condition = lambda form, action: form.show_search_results
+
     @form.action(_(u'Search'), translationquery_actions)
     def handle_query(self, action, data):
         query = data['query']
+        local_only = data['local_only']
         language = data['language']
 
-        if query:
-            messages = query_message(query, language)
+        if local_only or query:
+            portal = getToolByName(self.context, 'portal_url').getPortalObject()
+            tool = ICustomizableTranslationsTool(portal)
+                
+            messages = tool.queryMessage(query,
+                                         language,
+                                         include_global=not local_only)
             if messages:
                 # set up result field
                 self.form_fields = setup_form_fields(managetranslationsset,
@@ -172,18 +216,36 @@ class TranslationsControlPanel(ControlPanelForm):
                 
                 self.show_search_results = True
                 self.form_fields['result'].field.vocabulary = SimpleVocabulary(
-                    [SimpleTerm(make_msg_token(msg['domain'], msg['msgid']),
-                                make_msg_token(msg['domain'], msg['msgid']),
+                    [SimpleTerm(make_token(msg['domain'], msg['msgid']),
+                                make_token(msg['domain'], msg['msgid']),
                                 msg['msgstr']) for msg in messages])
             else:
                self.status = _(u'No translations matched your query.')
         else:
             self.status = _(u'Empty query submitted. Please type in a query before searching.')
 
-    @form.action(_(u'Remove'), managetranslations_actions)
-    def handle_remove(self, action, data):
-        self.status = _(u'Translation removed.')
+    @form.action(_(u'Export as .po-file'), managetranslations_actions)
+    def handle_export(self, action, data):
+        domain, language = split_token(data['domain'])
 
+        response = self.request.response
+        
+        # set response header to plain text
+        response.setHeader('Content-Type', 'text/plain')        
+
+        # set filename
+        response.setHeader('Content-Disposition', 
+                           'attachment; filename=%s-%s.po' % (domain, language))
+
+        portal = getToolByName(self.context, 'portal_url').getPortalObject()
+        tool = ICustomizableTranslationsTool(portal)
+
+        messages = tool.listMessages(domain, language)
+
+        return po_export(domain,
+                         language,
+                         messages)
+        
     def getActionsFor(self, fieldset):
         """Helper method to allow displaying actions inside each
         fieldset."""

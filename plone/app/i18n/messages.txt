@@ -1,8 +1,11 @@
 Messsages
 =========
 
-lame pts setup
---------------
+  >>> from pprint import pprint
+  >>> from textwrap import wrap
+
+PTS setup
+---------
 
 Alas we need to re-register PTS because the tear-down after the unit tests
 will clear the component architecture registry.
@@ -12,14 +15,17 @@ will clear the component architecture registry.
   >>> from Products.PlacelessTranslationService.interfaces import IPlacelessTranslationService
   >>> provideUtility(cp.TranslationService, IPlacelessTranslationService)
 
-lame request setup
-------------------
+Request setup
+-------------
 
   >>> from plone.app.i18n.tests import TestRequest
   >>> request = TestRequest("en")
-  
-add custom translation
-----------------------
+
+Add new translation
+-------------------
+
+  >>> from plone.app.i18n.interfaces import ICustomizableTranslationsTool
+  >>> tool = ICustomizableTranslationsTool(portal)
 
 A Plone site has many translation domains available.  By default,
 they're all global, but they can be overridden, so to allow through
@@ -36,11 +42,10 @@ look up 'April' in Danish:
 
 Add a custom translation for this message.
   
-  >>> from plone.app.i18n import messages
-  >>> messages.customize_translation(msgid=u'month_apr',
-  ...                                msg=u'April',
-  ...			             domain='plonelocales',
-  ...			             language='da')
+  >>> tool.addMessage(msgid=u'month_apr',
+  ...                 msg=u'April',
+  ...                 domain='plonelocales',
+  ...                 language='da')
 
 
 This should register a local translation domain. Let's get it.
@@ -63,36 +68,32 @@ does not exist in our local domain:
   >>> translate(u'month_jan', domain='plonelocales', context=request, target_language='da')
   u'januar'
   
-query existing translations
+Query existing translations
 ---------------------------
 
 We can query for existing messages to identify message ids that we
 want to translate.  E.g. the message id for 'April' is 'month_apr',
 but users don't know about ids.
 
-  >>> from pprint import pprint
-  >>> pprint(messages.query_message(query=u'April', language='da')) # doctest: +ELLIPSIS
+  >>> pprint(tool.queryMessage(query=u'April',
+  ...                          language='da',
+  ...                          include_global=False)) # doctest: +ELLIPSIS
   [{'domain': 'plonelocales',
     'language': 'da',
     'mod_time': ...,
     'msgid': u'month_apr',
-    'msgstr': u'April'},
-   {'domain': 'plone',
-    'language': 'da',
-    'mod_time': 0,
-    'msgid': u'month_apr',
-    'msgstr': u'april'}]
+    'msgstr': u'April'}]
 
 We won't be able to query default strings since they're not registered as translations:
     
-  >>> pprint(messages.query_message(query=u'Thanks for using our product, we hope '
-  ...                               'you like it!', language='en'))
+  >>> pprint(tool.queryMessage(query=u'Thanks for using our product, we hope '
+  ...                                 'you like it!', language='en'))
   []
 
 But let's try it in French:
   
-  >>> pprint(messages.query_message(query=u'Avant de commencer',
-  ...                               language='fr')) # doctest: +ELLIPSIS
+  >>> pprint(tool.queryMessage(query=u'Avant de commencer \xe0 explorer votre site Plone',
+  ...                          language='fr')) # doctest: +ELLIPSIS
   [{'domain': u'plonefrontpage',
     'language': u'fr',
     'mod_time': ...,
@@ -103,7 +104,7 @@ A more complex example. Here we query for a text where part of it is contained
 in an HTML-tag. We want to allow this, since users won't be able to see that
 the message is composed in HTML.
 
-  >>> pprint(messages.query_message("""
+  >>> pprint(tool.queryMessage("""
   ... Aggiungi i tuoi siti all' elenco di siti Plone
   ... """, language='it')) # doctest: +ELLIPSIS
   [{'domain': u'plonefrontpage',
@@ -114,7 +115,7 @@ the message is composed in HTML.
 
 We can also query message ids (for technical users):
 
-  >>> pprint(messages.query_message(query=u'month_jan', language='da'))
+  >>> pprint(tool.queryMessage(query=u'month_jan', language='da'))
   [{'domain': 'plone',
     'language': 'da',
     'mod_time': 0,
@@ -135,3 +136,25 @@ We can also query message ids (for technical users):
     'mod_time': 0,
     'msgid': u'month_jan_abbr',
     'msgstr': u'jan'}]
+
+Export
+------
+
+  >>> from plone.app.i18n.export import po_export
+  >>> messages = tool.listMessages('plonelocales', 'da')
+  >>> for line in po_export('plonelocales', 'da', messages).split("\n"):
+  ...   print line
+  # Gettext Message File
+  msgid ""
+  msgstr ""
+  "MIME-Version: 1.0\n"
+  "Content-Type: text/plain; charset=utf-8\n"
+  "Content-Transfer-Encoding: 8bit\n"
+  "Language-code: da\n"
+  "Preferred-encodings: utf-8\n"
+  "Domain: plonelocales\n"
+  <BLANKLINE>
+  <BLANKLINE>
+  <BLANKLINE>
+  msgid "month_apr"
+  msgstr "April"
