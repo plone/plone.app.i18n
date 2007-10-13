@@ -57,4 +57,9 @@
 
   <adapter factory=".messages.LocalTranslationDomainAdapter" />
 
+  <utility
+     component=".vocabularies.LocalTranslationDomains"
+     name="plone.app.i18n.vocabularies.LocalTranslationDomains"
+     />
+
 </configure>
