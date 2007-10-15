@@ -36,24 +36,7 @@ class LanguageSelector(BrowserView):
         """Returns list of languages."""
         if self.tool is None:
             return []
-
-        bound = self.tool.getLanguageBindings()
-        current = bound[0]
-
-        supported = self.tool.getSupportedLanguages()
-        languages = []
-        for lang in supported:
-            data = {}
-            data['code'] = lang
-            if lang == current:
-                data['selected'] = True
-            else:
-                data['selected'] = False
-            data['flag'] = self.tool.getFlagForLanguageCode(lang)
-            data['name'] = self.tool.getNameForLanguageCode(lang)
-            languages.append(data)
-
-        return languages
+        return [lang for lang in self.tool.getAvailableLanguageInformation().values() if lang['selected']]
 
     def showFlags(self):
         """Do we use flags?."""
