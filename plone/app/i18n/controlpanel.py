@@ -218,7 +218,7 @@ class TranslationsControlPanel(ControlPanelForm):
                 self.form_fields['result'].field.vocabulary = SimpleVocabulary(
                     [SimpleTerm(make_token(msg['domain'], msg['msgid']),
                                 make_token(msg['domain'], msg['msgid']),
-                                msg['msgstr']) for msg in messages])
+                                "%s <em>(%s)</em>" % (msg['msgstr'], msg['domain'])) for msg in messages])
             else:
                self.status = _(u'No translations matched your query.')
         else:
