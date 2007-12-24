@@ -2,7 +2,7 @@ Changelog for plone.app.i18n
 
     (name of developer listed in brackets)
 
-plone.app.i18n - 1.0.1 Unreleased
+plone.app.i18n - 1.0.1 Released December 24, 2007
 
     - Fixed the languages method of the selector to include the native
       language code.
