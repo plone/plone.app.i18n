@@ -2,6 +2,10 @@ Changelog for plone.app.i18n
 
     (name of developer listed in brackets)
 
+plone.app.i18n - 1.0.3 Unreleased
+
+
+
 plone.app.i18n - 1.0.2 Released January 9, 2008
 
     - Undo the damage from r17682 which removed the language code from the
