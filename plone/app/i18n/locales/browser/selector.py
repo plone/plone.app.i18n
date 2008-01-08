@@ -36,7 +36,14 @@ class LanguageSelector(BrowserView):
         """Returns list of languages."""
         if self.tool is None:
             return []
-        return [lang for lang in self.tool.getAvailableLanguageInformation().values() if lang['selected']]
+
+        def merge(lang, info):
+            info["code"]=lang
+            return info
+
+        return [merge(lang, info) for (lang,info) in
+                    self.tool.getAvailableLanguageInformation().items()
+                    if info["selected"]]
 
     def showFlags(self):
         """Do we use flags?."""

@@ -2,6 +2,14 @@ Changelog for plone.app.i18n
 
     (name of developer listed in brackets)
 
+plone.app.i18n - 1.0.2 UNRELEASED
+
+    - Undo the damage from r17682 which removed the language code from the
+      return value of LanguageSelector.languages. This broke the language
+      selectors, which is mostly noticable by LinguaPlone no longer working.
+      [wichert]
+
+
 plone.app.i18n - 1.0.1 Released December 24, 2007
 
     - Fixed the languages method of the selector to include the native
