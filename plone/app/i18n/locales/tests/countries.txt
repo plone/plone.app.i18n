@@ -14,6 +14,9 @@ Country tests.
   >>> u'en' in countrycodes
   True
 
+  >>> id(countrycodes) == id(util.countries)
+  False
+
   >>> countries = util.getCountries()
   >>> len(countries)
   243
@@ -24,3 +27,15 @@ Country tests.
 
   >>> de[u'flag']
   u'/++resource++country-flags/de.gif'
+
+  >>> old = util.getAvailableCountries()
+  >>> countries = ['de']
+  >>> util.setAvailableCountries(countries)
+
+  >>> util.getAvailableCountries()
+  ['de']
+
+  >>> id(countries) == util.countries
+  False
+
+  >>> util.setAvailableCountries(old)

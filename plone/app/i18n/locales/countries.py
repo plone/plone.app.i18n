@@ -28,10 +28,10 @@ class Countries(SimpleItem, CountryAvailability):
     def getAvailableCountries(self):
         """Return a sequence of country tags for available countries.
         """
-        return self.countries
+        return list(self.countries)
 
     def setAvailableCountries(self, countries):
         """Set a list of available country tags.
         """
-        if isinstance(countries, list):
-            self.countries = countries
+        countries = list(countries)
+        self.countries = countries

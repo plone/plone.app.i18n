@@ -15,6 +15,20 @@ Language tests.
   >>> u'en' in languagecodes
   True
 
+  >>> id(languagecodes) == id(util.languages)
+  False
+
+  >>> old = util.combined
+  >>> combined = ['de-de']
+  >>> util.setAvailableLanguages(combined, combined=True)
+  >>> languagecodes = util.getAvailableLanguages(combined=True)
+  >>> len(languagecodes)
+  2
+
+  >>> id(combined) == id(util.combined)
+  False
+
+  >>> util.setAvailableLanguages(old, combined=True)
 
 
   >>> util = queryUtility(IMetadataLanguages)

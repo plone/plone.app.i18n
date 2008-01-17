@@ -29,21 +29,23 @@ class Languages(SimpleItem, LanguageAvailability):
         self.combined = []
 
     def getAvailableLanguages(self, combined=False):
-        """Return a sequence of language tags for available languages.
+        """Returns a sequence of language tags for available languages.
         """
         if combined:
-            return self.languages.extend(self.combined)
+            languages = list(self.languages)
+            languages.extend(self.combined)
+            return languages
         else:
-            return self.languages
+            return list(self.languages)
 
     def setAvailableLanguages(self, languages, combined=False):
-        """Set a list of available language tags.
+        """Sets a list of available language tags.
         """
-        if isinstance(languages, list):
-            if combined:
-                self.combined = languages
-            else:
-                self.languages = languages
+        languages = list(languages)
+        if combined:
+            self.combined = languages
+        else:
+            self.languages = languages
 
 
 class ContentLanguages(Languages, ContentLanguageAvailability):
