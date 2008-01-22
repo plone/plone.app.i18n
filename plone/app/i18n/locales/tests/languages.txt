@@ -1,4 +1,5 @@
-Language tests.
+Language tests
+--------------
 
   >>> from plone.app.i18n.locales.interfaces import IContentLanguages
   >>> from plone.app.i18n.locales.interfaces import IMetadataLanguages
@@ -17,6 +18,13 @@ Language tests.
 
   >>> id(languagecodes) == id(util.languages)
   False
+
+  >>> old = util.getAvailableLanguages()
+  >>> util.setAvailableLanguages((u'en', u'de'))
+  >>> util.getAvailableLanguages()
+  [u'en', u'de']
+
+  >>> util.setAvailableLanguages(old)
 
   >>> old = util.combined
   >>> combined = ['de-de']

@@ -1,7 +1,4 @@
 # -*- coding: UTF-8 -*-
-"""
-    Country tests.
-"""
 
 from Products.PloneTestCase import PloneTestCase
 PloneTestCase.setupPloneSite()

@@ -4,8 +4,12 @@ Changelog for plone.app.i18n
 
 plone.app.i18n - 1.0.3 Unreleased
 
+    - Added more tests. 100% test coverage now.
+      [hannosch]
+
     - Added more tests for language and countries utilities. Fixed some
       call-by-reference bugs with lists found while writing those.
+      [hannosch]
 
 plone.app.i18n - 1.0.2 Released January 9, 2008
 

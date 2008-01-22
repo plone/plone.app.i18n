@@ -8,6 +8,48 @@ from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
 class LanguageSelector(BrowserView):
     """Language selector.
+
+      >>> ls = LanguageSelector(None, dict(), None, None)
+      >>> ls
+      <plone.app.i18n.locales.browser.selector.LanguageSelector object at ...>
+
+      >>> ls.update()
+      >>> ls.available()
+      False
+      >>> ls.languages()
+      []
+      >>> ls.showFlags()
+      False
+
+      >>> class Tool(object):
+      ...     use_cookie_negotiation = True
+      ...
+      ...     def showFlags(self):
+      ...         return True
+      ...
+      ...     def getAvailableLanguageInformation(self):
+      ...         return dict(en={'selected' : True}, de={'selected' : False})
+
+      >>> ls.tool = Tool()
+      >>> ls.available()
+      True
+      >>> ls.languages()
+      [{'code': 'en', 'selected': True}]
+      >>> ls.showFlags()
+      True
+
+      >>> class Dummy(object):
+      ...     def getPortalObject(self):
+      ...         return self
+      ...
+      ...     def absolute_url(self):
+      ...         return 'absolute url'
+
+      >>> context = Dummy()
+      >>> context.portal_url = Dummy()
+      >>> ls = LanguageSelector(context, dict(), None, None)
+      >>> ls.portal_url
+      'absolute url'
     """
     implements(IViewlet)
 
@@ -21,14 +63,16 @@ class LanguageSelector(BrowserView):
         self.view = view
         self.manager = manager
         self.tool = getToolByName(context, 'portal_languages', None)
-        portal_tool = getToolByName(context, 'portal_url')
-        self.portal_url = portal_tool.getPortalObject().absolute_url()
+        portal_tool = getToolByName(context, 'portal_url', None)
+        self.portal_url = None
+        if portal_tool is not None:
+            self.portal_url = portal_tool.getPortalObject().absolute_url()
 
     def update(self):
         pass
 
     def available(self):
-        if self.tool.use_cookie_negotiation:
+        if self.tool is not None and self.tool.use_cookie_negotiation:
             return True
         return False
 
