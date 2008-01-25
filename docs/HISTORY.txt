@@ -4,6 +4,13 @@ Changelog for plone.app.i18n
 
 plone.app.i18n - 1.0.3 Unreleased
 
+    - Fixed bug: all available languages in the languageselector box
+      were always marked as selected, at least when using language
+      cookies.  In practice this meant the last language was always
+      shown in the box and this language was actually never used and
+      could not be set.
+      [maurits]
+
     - Added more tests. 100% test coverage now.
       [hannosch]
 

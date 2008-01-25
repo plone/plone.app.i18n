@@ -28,13 +28,18 @@ class LanguageSelector(BrowserView):
       ...         return True
       ...
       ...     def getAvailableLanguageInformation(self):
-      ...         return dict(en={'selected' : True}, de={'selected' : False})
+      ...         return dict(en={'selected' : True}, de={'selected' : False},
+      ...                     nl={'selected' : True})
+      ...
+      ...     def getLanguageBindings(self):
+      ...         # en = selected by user, nl = default, [] = other options
+      ...         return ('en', 'nl', [])
 
       >>> ls.tool = Tool()
       >>> ls.available()
       True
       >>> ls.languages()
-      [{'code': 'en', 'selected': True}]
+      [{'code': 'nl', 'selected': False}, {'code': 'en', 'selected': True}]
       >>> ls.showFlags()
       True
 
@@ -81,8 +86,15 @@ class LanguageSelector(BrowserView):
         if self.tool is None:
             return []
 
+        bound = self.tool.getLanguageBindings()
+        current = bound[0]
+
         def merge(lang, info):
             info["code"]=lang
+            if lang == current:
+                info['selected'] = True
+            else:
+                info['selected'] = False
             return info
 
         return [merge(lang, info) for (lang,info) in
