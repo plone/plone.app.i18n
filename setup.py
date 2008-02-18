@@ -18,7 +18,7 @@ setup(name='plone.app.i18n',
       url='http://svn.plone.org/svn/plone/plone.app.i18n',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
-      namespace_packages=['plone.app'],
+      namespace_packages = ['plone', 'plone.app'],
       include_package_data=True,
       zip_safe=False,
       install_requires=[
