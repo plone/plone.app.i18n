@@ -4,6 +4,10 @@ Changelog for plone.app.i18n
 
 plone.app.i18n - 1.0.4 Unreleased
 
+    - Make the language selector deal with languages for which no flag is
+      defined. Ported over from LinguaPlone.
+      [wichert]
+
 
 plone.app.i18n - 1.0.3 Released January 31, 2008
 

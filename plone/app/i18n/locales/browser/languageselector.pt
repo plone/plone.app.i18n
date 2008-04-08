@@ -12,7 +12,7 @@
                   tal:omit-tag="selected">
 
                 <a href=""
-                   tal:define="flag lang/flag;
+                   tal:define="flag lang/flag|nothing;
                                name lang/name"
                    tal:attributes="href string:${here/absolute_url}/switchLanguage?set_language=${code};
                                    title name">
