@@ -1,6 +1,7 @@
 from zope.interface import implements
 from zope.viewlet.interfaces import IViewlet
 
+from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
@@ -77,8 +78,12 @@ class LanguageSelector(BrowserView):
         pass
 
     def available(self):
-        if self.tool is not None and self.tool.use_cookie_negotiation:
-            return True
+        if self.tool is not None:
+            if (self.tool.use_cookie_negotiation or
+                # Allow tests to force display of selector viewlet.
+                # Using getattr for BBB with older versions of language tool.
+                getattr(aq_base(self.tool), 'always_show_selector', False)):
+                return True
         return False
 
     def languages(self):
