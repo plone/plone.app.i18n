@@ -54,7 +54,7 @@ class LanguageSelector(BrowserView):
       >>> class NewTool(Tool):
       ...     always_show_selector = False
       ...
-      ...     def isSelectorAvailable(self):
+      ...     def showSelector(self):
       ...         return bool(self.use_cookie_negotiation or self.always_show_selector)
 
       >>> ls.tool = NewTool()
@@ -104,10 +104,11 @@ class LanguageSelector(BrowserView):
 
     def available(self):
         if self.tool is not None:
-            # Allow the tool to have a say in viewlet visibility
-            isAvailable = getattr(aq_base(self.tool), 'isSelectorAvailable', None)
-            if isAvailable is not None:
-                return isAvailable()
+            # Ask the language tool. Using getattr here for BBB with older
+            # versions of the tool.
+            showSelector = getattr(aq_base(self.tool), 'showSelector', None)
+            if showSelector is not None:
+                return showSelector()
             # BBB
             return bool(self.tool.use_cookie_negotiation)
         return False
