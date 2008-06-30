@@ -108,7 +108,7 @@ class LanguageSelector(BrowserView):
             # versions of the tool.
             showSelector = getattr(aq_base(self.tool), 'showSelector', None)
             if showSelector is not None:
-                return showSelector()
+                return self.tool.showSelector() # Call with aq context
             # BBB
             return bool(self.tool.use_cookie_negotiation)
         return False
