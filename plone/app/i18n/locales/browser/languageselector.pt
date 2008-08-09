@@ -13,7 +13,7 @@
 
                 <a href=""
                    tal:define="flag lang/flag|nothing;
-                               name lang/name"
+                               name lang/native"
                    tal:attributes="href string:${here/absolute_url}/switchLanguage?set_language=${code};
                                    title name">
                     <tal:flag condition="flag">
@@ -37,7 +37,7 @@
                     onchange=""
                     tal:attributes="onchange string:window.location='${context/absolute_url}/switchLanguage?set_language=' + this.options[this.selectedIndex].value">
                 <option tal:repeat="lang languages"
-                        tal:content="lang/name"
+                        tal:content="lang/native"
                         tal:attributes="selected lang/selected;
                                         value lang/code">Language</option>
             </select>
