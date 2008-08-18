@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.6
+-----
+
+
 1.0.5 - August 18, 2008
 -----------------------
 
@@ -90,7 +94,7 @@ Changelog
 
     - Use getToolByName instead of getUtility again. Updated language chooser
       viewlet to be more defensive, when there's no language tool available.
-      This closes https://dev.plone.org/plone/ticket/6559.
+      This closes http://dev.plone.org/plone/ticket/6559.
       [hannosch]
 
 
