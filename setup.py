@@ -6,8 +6,8 @@ version = '1.0.5'
 setup(name='plone.app.i18n',
       version=version,
       description="Plone specific i18n extensions.",
-      long_description="""\
-""",
+      long_description=open("README.txt").read() + "\n" +
+                       open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
         'Framework :: Plone',
         'Framework :: Zope2',
@@ -15,7 +15,7 @@ setup(name='plone.app.i18n',
       keywords='Plone i18n',
       author='Plone Foundation',
       author_email='plone-developers@lists.sourceforge.net',
-      url='http://svn.plone.org/svn/plone/plone.app.i18n',
+      url='http://pypi.python.org/pypi/plone.app.i18n',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages = ['plone', 'plone.app'],
