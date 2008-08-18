@@ -4,112 +4,115 @@ Changelog
 1.0.6
 -----
 
+- Reformat history.
+  [hannosch]
+
 
 1.0.5 - August 18, 2008
 -----------------------
 
-    - Changed the language selector viewlet to use the native name instead of
-      always showing the English name. This closes
-      http://dev.plone.org/plone/ticket/7103.
-      [hannosch]
+- Changed the language selector viewlet to use the native name instead of
+  always showing the English name. This closes
+  http://dev.plone.org/plone/ticket/7103.
+  [hannosch]
 
-    - Allow tests to force display of selector viewlet by setting
-      always_show_selector = True on the portal_languages tool.
-      [stefan]
+- Allow tests to force display of selector viewlet by setting
+  always_show_selector = True on the portal_languages tool.
+  [stefan]
 
 
 1.0.4 - April 19, 2008
 ----------------------
 
-    - Make the language selector deal with languages for which no flag is
-      defined. Ported over from LinguaPlone.
-      [wichert]
+- Make the language selector deal with languages for which no flag is
+  defined. Ported over from LinguaPlone.
+  [wichert]
 
 
 1.0.3 - January 31, 2008
 ------------------------
 
-    - Fixed bug: all available languages in the languageselector box were
-      always marked as selected, at least when using language cookies. In
-      practice this meant the last language was always shown in the box and
-      this language was actually never used and could not be set.
-      [maurits]
+- Fixed bug: all available languages in the languageselector box were
+  always marked as selected, at least when using language cookies. In
+  practice this meant the last language was always shown in the box and
+  this language was actually never used and could not be set.
+  [maurits]
 
-    - Added more tests. 100% test coverage now.
-      [hannosch]
+- Added more tests. 100% test coverage now.
+  [hannosch]
 
-    - Added more tests for language and countries utilities. Fixed some
-      call-by-reference bugs with lists found while writing those.
-      [hannosch]
+- Added more tests for language and countries utilities. Fixed some
+  call-by-reference bugs with lists found while writing those.
+  [hannosch]
 
 
 1.0.2 - January 9, 2008
 -----------------------
 
-    - Undo the damage from r17682 which removed the language code from the
-      return value of LanguageSelector.languages. This broke the language
-      selectors, which is mostly noticeable by LinguaPlone no longer working.
-      [wichert]
+- Undo the damage from r17682 which removed the language code from the
+  return value of LanguageSelector.languages. This broke the language
+  selectors, which is mostly noticeable by LinguaPlone no longer working.
+  [wichert]
 
 
 1.0.1 - December 24, 2007
 -------------------------
 
-    - Fixed the languages method of the selector to include the native
-      language code.
-      [wichert, hannosch]
+- Fixed the languages method of the selector to include the native
+  language code.
+  [wichert, hannosch]
 
-    - Fixed stupid bug in using super().
-      [hannosch]
+- Fixed stupid bug in using super().
+  [hannosch]
 
 
 1.0 - August 13, 2007
 ---------------------
 
-    - No changes.
-      [hannosch]
+- No changes.
+  [hannosch]
 
 
 1.0rc1 - July 9, 2007
 ---------------------
 
-    - Removed some left over tool init stuff. The local utilities are not used
-      as tools anymore.
-      [hannosch]
+- Removed some left over tool init stuff. The local utilities are not used
+  as tools anymore.
+  [hannosch]
 
-    - Only show the language selector viewlet when cookie language negotiation
-      is enabled.
-      [hannosch]
+- Only show the language selector viewlet when cookie language negotiation
+  is enabled.
+  [hannosch]
 
 
 1.0b3 - May 1, 2007
 -------------------
 
-    - Added id to language selector markup. Moved language selector to the
-      right side in the breadcrumbs line.
-      [fschulze]
+- Added id to language selector markup. Moved language selector to the
+  right side in the breadcrumbs line.
+  [fschulze]
 
-    - Fixed spelling error.
-      [wichert]
+- Fixed spelling error.
+  [wichert]
 
-    - Use getToolByName instead of getUtility again. Updated language chooser
-      viewlet to be more defensive, when there's no language tool available.
-      This closes http://dev.plone.org/plone/ticket/6559.
-      [hannosch]
+- Use getToolByName instead of getUtility again. Updated language chooser
+  viewlet to be more defensive, when there's no language tool available.
+  This closes http://dev.plone.org/plone/ticket/6559.
+  [hannosch]
 
 
 1.0b2 - March 23, 2007
 ----------------------
 
-    - Replaced getToolByName with getUtility.
-      [hannosch]
+- Replaced getToolByName with getUtility.
+  [hannosch]
 
 
 1.0b1 - March 5, 2007
 ---------------------
 
-    - Initial implementation.
-      [hannosch]
+- Initial implementation.
+  [hannosch]
 
-    - Initial package structure.
-      [zopeskel]
+- Initial package structure.
+  [zopeskel]
