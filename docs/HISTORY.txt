@@ -4,6 +4,11 @@ Changelog
 1.0.6
 -----
 
+- Sort languages as shown in the user interface 
+  by order in portal_languages supported_langs variable
+  This allows to sort languages through GenericSetup.
+  [buechler, nouri]
+  
 - Reformat history.
   [hannosch]
 

@@ -24,16 +24,20 @@ class LanguageSelector(BrowserView):
 
       >>> class Tool(object):
       ...     use_cookie_negotiation = False
+      ...     supported_langs = ['de', 'en', 'ar']
       ...
       ...     def __init__(self, **kw):
       ...         self.__dict__.update(kw)
       ...
+      ...     def getSupportedLanguages(self):
+      ...         return self.supported_langs
+      ... 
       ...     def showFlags(self):
       ...         return True
       ...
       ...     def getAvailableLanguageInformation(self):
       ...         return dict(en={'selected' : True}, de={'selected' : False},
-      ...                     nl={'selected' : True})
+      ...                     nl={'selected' : True}, ar={'selected': True})
       ...
       ...     def getLanguageBindings(self):
       ...         # en = selected by user, nl = default, [] = other options
@@ -47,7 +51,8 @@ class LanguageSelector(BrowserView):
       >>> ls.available()
       True
       >>> ls.languages()
-      [{'code': 'nl', 'selected': False}, {'code': 'en', 'selected': True}]
+      [{'code': 'en', 'selected': True}, {'code': 'ar', 'selected': False}, 
+       {'code': 'nl', 'selected': False}]
       >>> ls.showFlags()
       True
 
@@ -129,9 +134,19 @@ class LanguageSelector(BrowserView):
                 info['selected'] = False
             return info
 
-        return [merge(lang, info) for (lang,info) in
-                    self.tool.getAvailableLanguageInformation().items()
-                    if info["selected"]]
+        languages = [merge(lang, info) for (lang,info) in
+                        self.tool.getAvailableLanguageInformation().items()
+                        if info["selected"]]
+        
+        # sort supported languages by index in portal_languages tool
+        supported_langs = self.tool.getSupportedLanguages()
+        def index(info):
+            try:
+                return supported_langs.index(info["code"])
+            except ValueError:
+                return len(supported_langs)
+        
+        return sorted(languages, key=index) 
 
     def showFlags(self):
         """Do we use flags?."""
