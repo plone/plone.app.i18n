@@ -4,6 +4,10 @@ Changelog
 1.0.7 - unreleased
 ------------------
 
+- Changed the language selector viewlet, so in case 'native' is not 
+  present (combined languages), use the name. This closes
+  https://dev.plone.org/plone/ticket/9318
+  [igbun]
 
 1.0.6 - 2009-03-07
 ------------------
