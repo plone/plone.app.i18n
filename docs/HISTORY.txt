@@ -1,10 +1,10 @@
 Changelog
 =========
 
-1.0.7 - unreleased
+1.0.7 - 2009-07-28
 ------------------
 
-- Changed the language selector viewlet, so in case 'native' is not 
+- Changed the language selector viewlet, so in case 'native' is not
   present (combined languages), use the name. This closes
   http://dev.plone.org/plone/ticket/9318
   [igbun]
@@ -19,7 +19,6 @@ Changelog
 - Reformat history.
   [hannosch]
 
-
 1.0.5 - August 18, 2008
 -----------------------
 
@@ -31,7 +30,6 @@ Changelog
 - Allow tests to force display of selector viewlet by setting
   always_show_selector = True on the portal_languages tool.
   [stefan]
-
 
 1.0.4 - April 19, 2008
 ----------------------
