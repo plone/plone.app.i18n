@@ -1,10 +1,9 @@
 from zope.interface import implements
 from zope.viewlet.interfaces import IViewlet
 
-from Acquisition import aq_base
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
 class LanguageSelector(BrowserView):
@@ -89,34 +88,30 @@ class LanguageSelector(BrowserView):
     """
     implements(IViewlet)
 
-    render = ZopeTwoPageTemplateFile('languageselector.pt')
+    render = ViewPageTemplateFile('languageselector.pt')
 
     def __init__(self, context, request, view, manager):
         super(LanguageSelector, self).__init__(context, request)
-        self.__parent__ = view
         self.context = context
         self.request = request
         self.view = view
         self.manager = manager
-        self.tool = getToolByName(context, 'portal_languages', None)
-        portal_tool = getToolByName(context, 'portal_url', None)
-        self.portal_url = None
-        if portal_tool is not None:
-            self.portal_url = portal_tool.getPortalObject().absolute_url()
 
     def update(self):
-        pass
+        self.tool = getToolByName(self.context, 'portal_languages', None)
 
     def available(self):
         if self.tool is not None:
-            # Ask the language tool. Using getattr here for BBB with older
-            # versions of the tool.
-            showSelector = getattr(aq_base(self.tool), 'showSelector', None)
-            if showSelector is not None:
-                return self.tool.showSelector() # Call with aq context
-            # BBB
-            return bool(self.tool.use_cookie_negotiation)
+            selector = self.tool.showSelector()
+            languages = len(self.tool.getSupportedLanguages()) > 1
+            return selector and languages
         return False
+
+    def portal_url(self):
+        portal_tool = getToolByName(self.context, 'portal_url', None)
+        if portal_tool is not None:
+            return portal_tool.getPortalObject().absolute_url()
+        return None
 
     def languages(self):
         """Returns list of languages."""
