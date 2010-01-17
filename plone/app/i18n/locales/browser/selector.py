@@ -24,6 +24,7 @@ class LanguageSelector(BrowserView):
       >>> class Tool(object):
       ...     use_cookie_negotiation = False
       ...     supported_langs = ['de', 'en', 'ar']
+      ...     always_show_selector = False
       ...
       ...     def __init__(self, **kw):
       ...         self.__dict__.update(kw)
@@ -41,6 +42,9 @@ class LanguageSelector(BrowserView):
       ...     def getLanguageBindings(self):
       ...         # en = selected by user, nl = default, [] = other options
       ...         return ('en', 'nl', [])
+      ...
+      ...     def showSelector(self):
+      ...         return bool(self.use_cookie_negotiation or self.always_show_selector)
 
       >>> ls.tool = Tool()
       >>> ls.available()
@@ -49,27 +53,18 @@ class LanguageSelector(BrowserView):
       >>> ls.tool = Tool(use_cookie_negotiation=True)
       >>> ls.available()
       True
+
       >>> ls.languages()
       [{'code': 'en', 'selected': True}, {'code': 'ar', 'selected': False}, 
        {'code': 'nl', 'selected': False}]
       >>> ls.showFlags()
       True
 
-      >>> class NewTool(Tool):
-      ...     always_show_selector = False
-      ...
-      ...     def showSelector(self):
-      ...         return bool(self.use_cookie_negotiation or self.always_show_selector)
-
-      >>> ls.tool = NewTool()
-      >>> ls.available()
-      False
-
-      >>> ls.tool = NewTool(use_cookie_negotiation=True)
+      >>> ls.tool = Tool(use_cookie_negotiation=True)
       >>> ls.available()
       True
 
-      >>> ls.tool = NewTool(always_show_selector=True)
+      >>> ls.tool = Tool(always_show_selector=True)
       >>> ls.available()
       True
 
@@ -83,7 +78,7 @@ class LanguageSelector(BrowserView):
       >>> context = Dummy()
       >>> context.portal_url = Dummy()
       >>> ls = LanguageSelector(context, dict(), None, None)
-      >>> ls.portal_url
+      >>> ls.portal_url()
       'absolute url'
     """
     implements(IViewlet)
