@@ -1,4 +1,3 @@
-import os
 from setuptools import setup, find_packages
 
 version = '1.0.8'
@@ -7,7 +6,7 @@ setup(name='plone.app.i18n',
       version=version,
       description="Plone specific i18n extensions.",
       long_description=open("README.txt").read() + "\n" +
-                       open(os.path.join("docs", "HISTORY.txt")).read(),
+                       open("CHANGES.txt").read(),
       classifiers=[
         'Framework :: Plone',
         'Framework :: Zope2',
