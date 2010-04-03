@@ -4,7 +4,7 @@
 
   <browser:viewlet  
       name="plone.app.i18n.locales.languageselector"
-      manager="plone.app.layout.viewlets.interfaces.IPortalTop"
+      manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
       class=".selector.LanguageSelector"
       permission="zope2.View"
       />
