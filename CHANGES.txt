@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.9 - unreleased
+2.0b1 - unreleased
 ------------------
 
 - Move the language selector viewlet to the portal header viewlet manager.
