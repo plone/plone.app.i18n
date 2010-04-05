@@ -15,19 +15,18 @@
                        name lang/native|lang/name;
                        showflag python:showFlags and flag;"
            tal:attributes="href string:${here_url}/switchLanguage?set_language=${code};
-                           title name">
-            <tal:flag condition="showflag">
+                           title name"
+            ><tal:flag condition="showflag">
                 <img width="14"
                      height="11"
                      alt=""
                      tal:attributes="src string:${portal_url}${flag};
                                      alt name;
                                      title name;" />
-            </tal:flag>
-            <tal:nonflag condition="not: showflag">
-                <span tal:replace="name">language name</span>
-            </tal:nonflag>
-        </a>
+            </tal:flag
+            ><tal:nonflag condition="not: showflag"
+                          replace="name">language name</tal:nonflag
+        ></a>
     </li>
     </tal:language>
 </ul>
