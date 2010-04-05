@@ -9,10 +9,8 @@
         <li tal:condition="showFlags"
             tal:define="portal_url view/portal_url;"
             tal:repeat="lang languages">
-            <span tal:define="code lang/code;
-                              selected lang/selected"
-                  tal:omit-tag="selected">
-
+            <tal:lang tal:define="code lang/code;
+                                  selected lang/selected">
                 <a href=""
                    tal:define="flag lang/flag|nothing;
                                name lang/native|lang/name"
@@ -30,8 +28,7 @@
                         <span tal:replace="code">language code</span>
                     </tal:nonflag>
                 </a>
-
-            </span>
+            </tal:lang>
         </li>
 
         <li tal:condition="not: showFlags">

@@ -4,6 +4,9 @@ Changelog
 2.0b1 - unreleased
 ------------------
 
+- Avoid extra empty span inside the language selector.
+  [hannosch]
+
 - Move the language selector viewlet to the portal header viewlet manager.
   [davisagli]
 
