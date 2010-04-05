@@ -4,6 +4,9 @@ Changelog
 2.0b1 - unreleased
 ------------------
 
+- Updated language selector markup to match the one in LinguaPlone.
+  [hannosch]
+
 - Avoid extra empty span inside the language selector.
   [hannosch]
 
