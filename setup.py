@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '2.0b2'
+version = '2.0'
 
 setup(name='plone.app.i18n',
       version=version,
@@ -8,14 +8,18 @@ setup(name='plone.app.i18n',
       long_description=open("README.txt").read() + "\n" +
                        open("CHANGES.txt").read(),
       classifiers=[
-        'Framework :: Plone',
-        'Framework :: Zope2',
-      ],
-      keywords='Plone i18n',
+          "Environment :: Web Environment",
+          "Framework :: Plone",
+          "Framework :: Zope2",
+          "License :: OSI Approved :: GNU General Public License (GPL)",
+          "Operating System :: OS Independent",
+          "Programming Language :: Python",
+        ],
+      keywords='plone i18n',
       author='Plone Foundation',
       author_email='plone-developers@lists.sourceforge.net',
       url='http://pypi.python.org/pypi/plone.app.i18n',
-      license='GPL',
+      license='GPL version 2',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages = ['plone', 'plone.app'],
       include_package_data=True,
