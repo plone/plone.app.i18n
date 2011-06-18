@@ -3,7 +3,6 @@ from zope.viewlet.interfaces import IViewlet
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
 class LanguageSelector(BrowserView):
@@ -82,8 +81,6 @@ class LanguageSelector(BrowserView):
       'absolute url'
     """
     implements(IViewlet)
-
-    render = ViewPageTemplateFile('languageselector.pt')
 
     def __init__(self, context, request, view, manager):
         super(LanguageSelector, self).__init__(context, request)

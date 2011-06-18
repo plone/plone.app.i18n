@@ -4,6 +4,9 @@ Changelog
 2.0.1 - unreleased
 ------------------
 
+- Use template parameter in language selector's viewlet zcml declaration. Make
+  it easier to customize in add-ons.
+  [toutpt]
 
 2.0 - 2010-07-18
 ----------------
