@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.1 - unreleased
+2.0.1 - 2011-06-26
 ------------------
 
 - Use template parameter in language selector's viewlet zcml declaration. Make
