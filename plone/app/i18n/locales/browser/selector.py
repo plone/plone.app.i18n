@@ -30,7 +30,7 @@ class LanguageSelector(BrowserView):
       ...
       ...     def getSupportedLanguages(self):
       ...         return self.supported_langs
-      ... 
+      ...
       ...     def showFlags(self):
       ...         return True
       ...
@@ -54,7 +54,7 @@ class LanguageSelector(BrowserView):
       True
 
       >>> ls.languages()
-      [{'code': 'en', 'selected': True}, {'code': 'ar', 'selected': False}, 
+      [{'code': 'en', 'selected': True}, {'code': 'ar', 'selected': False},
        {'code': 'nl', 'selected': False}]
       >>> ls.showFlags()
       True
@@ -124,7 +124,7 @@ class LanguageSelector(BrowserView):
         languages = [merge(lang, info) for (lang,info) in
                         self.tool.getAvailableLanguageInformation().items()
                         if info["selected"]]
-        
+
         # sort supported languages by index in portal_languages tool
         supported_langs = self.tool.getSupportedLanguages()
         def index(info):
@@ -132,8 +132,8 @@ class LanguageSelector(BrowserView):
                 return supported_langs.index(info["code"])
             except ValueError:
                 return len(supported_langs)
-        
-        return sorted(languages, key=index) 
+
+        return sorted(languages, key=index)
 
     def showFlags(self):
         """Do we use flags?."""

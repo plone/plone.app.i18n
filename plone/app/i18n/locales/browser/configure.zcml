@@ -2,7 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser">
 
-  <browser:viewlet  
+  <browser:viewlet
       name="plone.app.i18n.locales.languageselector"
       manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
       class=".selector.LanguageSelector"
