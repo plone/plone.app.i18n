@@ -18,8 +18,8 @@ Country tests.
   False
 
   >>> countries = util.getCountries()
-  >>> len(countries)
-  243
+  >>> len(countries) > 200
+  True
 
   >>> de = countries[u'de']
   >>> de[u'name']
