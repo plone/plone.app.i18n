@@ -67,10 +67,12 @@ class LanguageSelector(BrowserView):
       >>> ls.available()
       True
 
+      >>> from zope.interface import implements
+      >>> from OFS.interfaces import IItem
       >>> class Dummy(object):
+      ...     implements(IItem)
       ...     def getPortalObject(self):
       ...         return self
-      ...
       ...     def absolute_url(self):
       ...         return 'absolute url'
 
