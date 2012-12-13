@@ -1,0 +1,2 @@
+*.py?
+/plone.app.i18n.egg-info/
