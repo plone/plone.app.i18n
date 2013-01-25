@@ -159,7 +159,6 @@ class LanguageSelector(BrowserView):
 
     def languages(self):
         """Returns list of languages."""
-        import pdb; pdb.set_trace()
         return self.adapter.languages()
 
     def urlForLanguage(self, code):
