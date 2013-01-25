@@ -10,4 +10,9 @@
       template="languageselector.pt"
       />
 
+   <adapter
+        for="*"
+        provides="plone.app.i18n.locales.interfaces.ISelectorAdapter"
+        factory=".selector.SelectorAdapter"/>
+
 </configure>

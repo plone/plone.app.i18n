@@ -4,6 +4,54 @@ from zope.viewlet.interfaces import IViewlet
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 
+from plone.app.i18n.locales.interfaces import ISelectorAdapter
+
+
+class SelectorAdapter(object):
+    implements(ISelectorAdapter)
+
+    def __init__(self, context):
+        self.context = context
+        self.tool = getToolByName(self.context, 'portal_languages', None)
+
+    def setRequest(self, request):
+        self.request = request
+
+    def languages(self):
+        """Returns list of languages."""
+        if self.tool is None:
+            return []
+
+        bound = self.tool.getLanguageBindings()
+        current = bound[0]
+
+        def merge(lang, info):
+            info["code"] = lang
+            if lang == current:
+                info['selected'] = True
+            else:
+                info['selected'] = False
+            return info
+
+        languages = [merge(lang, info) for (lang, info) in
+                        self.tool.getAvailableLanguageInformation().items()
+                        if info["selected"]]
+
+        # sort supported languages by index in portal_languages tool
+        supported_langs = self.tool.getSupportedLanguages()
+
+        def index(info):
+            try:
+                return supported_langs.index(info["code"])
+            except ValueError:
+                return len(supported_langs)
+
+        return sorted(languages, key=index)
+
+    def urlForLanguage(self, code):
+        """ Return the url with the set_language variable """
+        return self.context.absolute_url() + '/?set_language=' + code
+
 
 class LanguageSelector(BrowserView):
     """Language selector.
@@ -90,6 +138,8 @@ class LanguageSelector(BrowserView):
         self.request = request
         self.view = view
         self.manager = manager
+        self.adapter = ISelectorAdapter(context)
+        self.adapter.setRequest(request)
 
     def update(self):
         self.tool = getToolByName(self.context, 'portal_languages', None)
@@ -109,33 +159,12 @@ class LanguageSelector(BrowserView):
 
     def languages(self):
         """Returns list of languages."""
-        if self.tool is None:
-            return []
+        import pdb; pdb.set_trace()
+        return self.adapter.languages()
 
-        bound = self.tool.getLanguageBindings()
-        current = bound[0]
-
-        def merge(lang, info):
-            info["code"]=lang
-            if lang == current:
-                info['selected'] = True
-            else:
-                info['selected'] = False
-            return info
-
-        languages = [merge(lang, info) for (lang,info) in
-                        self.tool.getAvailableLanguageInformation().items()
-                        if info["selected"]]
-
-        # sort supported languages by index in portal_languages tool
-        supported_langs = self.tool.getSupportedLanguages()
-        def index(info):
-            try:
-                return supported_langs.index(info["code"])
-            except ValueError:
-                return len(supported_langs)
-
-        return sorted(languages, key=index)
+    def urlForLanguage(self, code):
+        """ Return the url with the set_language variable """
+        return self.adapter.urlForLanguage(code)
 
     def showFlags(self):
         """Do we use flags?."""
