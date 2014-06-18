@@ -4,7 +4,7 @@ Changelog
 2.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix url to switchLanguage to include the view [Gagaro]
 
 
 2.0.2 (2013-01-13)
