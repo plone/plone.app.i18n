@@ -7,6 +7,7 @@ from zope.interface import implements
 
 from OFS.SimpleItem import SimpleItem
 
+
 class Countries(SimpleItem, CountryAvailability):
     """A local utility storing a list of available countries.
 
@@ -18,7 +19,7 @@ class Countries(SimpleItem, CountryAvailability):
     """
     implements(ICountries)
 
-    id  = 'plone_app_countries'
+    id = 'plone_app_countries'
     title = 'Manages available countries'
     meta_type = 'Plone App I18N Countries'
 

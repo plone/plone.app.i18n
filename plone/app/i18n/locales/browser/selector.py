@@ -116,19 +116,20 @@ class LanguageSelector(BrowserView):
         current = bound[0]
 
         def merge(lang, info):
-            info["code"]=lang
+            info["code"] = lang
             if lang == current:
                 info['selected'] = True
             else:
                 info['selected'] = False
             return info
 
-        languages = [merge(lang, info) for (lang,info) in
+        languages = [merge(lang, info) for (lang, info) in
                         self.tool.getAvailableLanguageInformation().items()
                         if info["selected"]]
 
         # sort supported languages by index in portal_languages tool
         supported_langs = self.tool.getSupportedLanguages()
+
         def index(info):
             try:
                 return supported_langs.index(info["code"])
