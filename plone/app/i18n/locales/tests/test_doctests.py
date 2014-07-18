@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
 
-from Products.PloneTestCase import PloneTestCase
-PloneTestCase.setupPloneSite()
-
 import unittest
+
+from plone.app.testing.bbb import PTC_FUNCTIONAL_TESTING
+from plone.testing import layered
 
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
@@ -18,14 +18,12 @@ def test_suite():
     return unittest.TestSuite((
         DocTestSuite('plone.app.i18n.locales.countries'),
         DocTestSuite('plone.app.i18n.locales.languages'),
-        Suite('countries.txt',
+        layered(Suite('countries.txt',
             optionflags=OPTIONFLAGS,
             package='plone.app.i18n.locales.tests',
-            test_class=PloneTestCase.FunctionalTestCase
-            ),
-        Suite('languages.txt',
+            ), layer=PTC_FUNCTIONAL_TESTING),
+        layered(Suite('languages.txt',
             optionflags=OPTIONFLAGS,
             package='plone.app.i18n.locales.tests',
-            test_class=PloneTestCase.FunctionalTestCase
-            )
+            ), layer=PTC_FUNCTIONAL_TESTING)
         ))
