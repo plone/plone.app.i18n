@@ -6,6 +6,7 @@ from zope.component.testing import setUp, tearDown
 from zope.testing import doctest
 from zope.testing.doctestunit import DocTestSuite
 
+
 def test_suite():
     return unittest.TestSuite((
         DocTestSuite('plone.app.i18n.locales.browser.selector',
@@ -13,6 +14,3 @@ def test_suite():
                      tearDown=tearDown,
                      optionflags=doctest.ELLIPSIS | doctest.NORMALIZE_WHITESPACE),
         ))
-
-if __name__ == '__main__':
-    unittest.main(defaultTest="test_suite")

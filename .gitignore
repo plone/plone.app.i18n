@@ -1,2 +1,7 @@
 *.py?
 /plone.app.i18n.egg-info/
+.installed.cfg
+/develop-eggs
+/parts
+/bin
+*.bak

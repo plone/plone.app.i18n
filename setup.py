@@ -10,10 +10,12 @@ setup(name='plone.app.i18n',
       classifiers=[
           "Environment :: Web Environment",
           "Framework :: Plone",
+          "Framework :: Plone :: 5.0",
           "Framework :: Zope2",
           "License :: OSI Approved :: GNU General Public License (GPL)",
           "Operating System :: OS Independent",
           "Programming Language :: Python",
+          "Programming Language :: Python :: 2.7",
       ],
       keywords='plone i18n',
       author='Plone Foundation',
@@ -29,7 +31,7 @@ setup(name='plone.app.i18n',
       ],
       extras_require={
           'test': [
-              'Products.PloneTestCase',
+              'plone.app.testing',
           ]
       },
       )

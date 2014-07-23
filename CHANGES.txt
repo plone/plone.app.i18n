@@ -4,7 +4,11 @@ Changelog
 2.0.3 (unreleased)
 ------------------
 
-- Fix url to switchLanguage to include the view [Gagaro]
+- Fix url to switchLanguage to include the view
+  [Gagaro]
+
+- Ported to plone.app.testing
+  [tomgross]
 
 
 2.0.2 (2013-01-13)

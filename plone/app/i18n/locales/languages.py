@@ -12,6 +12,7 @@ from zope.interface import implements
 
 from OFS.SimpleItem import SimpleItem
 
+
 class Languages(SimpleItem, LanguageAvailability):
     """ A base implementation for persistent utilities implementing
     IModifiableLanguageAvailability.
@@ -59,7 +60,7 @@ class ContentLanguages(Languages, ContentLanguageAvailability):
     """
     implements(IContentLanguages)
 
-    id  = 'plone_app_content_languages'
+    id = 'plone_app_content_languages'
     title = 'Manages available content languages'
     meta_type = 'Plone App I18N Content Languages'
 
@@ -75,6 +76,6 @@ class MetadataLanguages(Languages, MetadataLanguageAvailability):
     """
     implements(IMetadataLanguages)
 
-    id  = 'plone_app_metadata_languages'
+    id = 'plone_app_metadata_languages'
     title = 'Manages available metadata languages'
     meta_type = 'Plone App I18N Metadata Languages'
