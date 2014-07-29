@@ -5,8 +5,8 @@ version = '2.0.3.dev0'
 setup(name='plone.app.i18n',
       version=version,
       description="Plone specific i18n extensions.",
-      long_description=open("README.txt").read() + "\n" +
-                       open("CHANGES.txt").read(),
+      long_description=open("README.rst").read() + "\n" +
+                       open("CHANGES.rst").read(),
       classifiers=[
           "Environment :: Web Environment",
           "Framework :: Plone",
