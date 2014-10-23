@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.0.3 (unreleased)
+2.0.3 (2014-10-22)
 ------------------
 
 - Fix url to switchLanguage to include the view
