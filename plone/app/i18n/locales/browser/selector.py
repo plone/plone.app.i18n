@@ -27,16 +27,18 @@ class LanguageSelector(BrowserView):
       ...
       ...     def __init__(self, **kw):
       ...         self.__dict__.update(kw)
-      ...         self.showFlags = True
       ...
       ...     def getSupportedLanguages(self):
       ...         return self.supported_langs
+      ...
+      ...     def showFlags(self):
+      ...         return True
       ...
       ...     def getAvailableLanguageInformation(self):
       ...         return dict(en={'selected' : True}, de={'selected' : False},
       ...                     nl={'selected' : True}, ar={'selected': True})
       ...
-      ...     def getLanguageBindings(self, request):
+      ...     def getLanguageBindings(self):
       ...         # en = selected by user, nl = default, [] = other options
       ...         return ('en', 'nl', [])
       ...
@@ -110,7 +112,7 @@ class LanguageSelector(BrowserView):
         if self.tool is None:
             return []
 
-        bound = self.tool.getLanguageBindings(self.request)
+        bound = self.tool.getLanguageBindings()
         current = bound[0]
 
         def merge(lang, info):
@@ -139,5 +141,5 @@ class LanguageSelector(BrowserView):
     def showFlags(self):
         """Do we use flags?."""
         if self.tool is not None:
-            return self.tool.showFlags
+            return self.tool.showFlags()
         return False
