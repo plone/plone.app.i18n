@@ -1,10 +1,11 @@
 Changelog
 =========
 
-2.0.4 (unreleased)
+3.0.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Adapted language viewlet to Plone 5
+  [bloodbare]
 
 
 2.0.3 (2014-10-22)
