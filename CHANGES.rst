@@ -4,7 +4,9 @@ Changelog
 3.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix switchLanguage links. Refs https://github.com/plone/Products.CMFPlone/issues/431
+  Needs 'use_cookie_negotiation' to be on to actually do anything.
+  [jaroel]
 
 
 3.0.0 (2015-03-26)
