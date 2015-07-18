@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.0.1 (unreleased)
+3.0.1 (2015-07-18)
 ------------------
 
 - Fix switchLanguage links. Refs https://github.com/plone/Products.CMFPlone/issues/431
