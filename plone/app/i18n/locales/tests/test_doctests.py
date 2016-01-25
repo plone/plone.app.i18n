@@ -1,12 +1,10 @@
 # -*- coding: UTF-8 -*-
 
 import unittest
+import doctest
 
 from plone.app.testing.bbb import PTC_FUNCTIONAL_TESTING
 from plone.testing import layered
-
-from zope.testing import doctest
-from zope.testing.doctestunit import DocTestSuite
 
 from Testing.ZopeTestCase import FunctionalDocFileSuite as Suite
 
@@ -17,8 +15,8 @@ OPTIONFLAGS = (doctest.REPORT_ONLY_FIRST_FAILURE |
 
 def test_suite():
     return unittest.TestSuite((
-        DocTestSuite('plone.app.i18n.locales.countries'),
-        DocTestSuite('plone.app.i18n.locales.languages'),
+        doctest.DocTestSuite('plone.app.i18n.locales.countries'),
+        doctest.DocTestSuite('plone.app.i18n.locales.languages'),
         layered(Suite('countries.txt',
             optionflags=OPTIONFLAGS,
             package='plone.app.i18n.locales.tests',
