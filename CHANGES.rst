@@ -10,7 +10,9 @@ New:
 
 Fixes:
 
-- *add item here*
+- Replace deprecated ``zope.testing.doctest`` and ``zope.testing.doctestunit``
+  imports with ``doctest`` module from stdlib.
+  [thet]
 
 
 3.0.1 (2015-07-18)
