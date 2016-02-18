@@ -4,10 +4,6 @@ Changelog
 3.0.2 (unreleased)
 ------------------
 
-New:
-
-- *add item here*
-
 Fixes:
 
 - Replace deprecated ``zope.testing.doctest`` and ``zope.testing.doctestunit``
