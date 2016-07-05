@@ -8,11 +8,12 @@ from plone.i18n.locales.languages import ContentLanguageAvailability
 from plone.i18n.locales.languages import MetadataLanguageAvailability
 from plone.i18n.locales.languages import LanguageAvailability
 
-from zope.interface import implements
+from zope.interface import implementer
 
 from OFS.SimpleItem import SimpleItem
 
 
+@implementer(IModifiableLanguageAvailability)
 class Languages(SimpleItem, LanguageAvailability):
     """ A base implementation for persistent utilities implementing
     IModifiableLanguageAvailability.
@@ -23,7 +24,6 @@ class Languages(SimpleItem, LanguageAvailability):
       >>> verifyClass(IModifiableLanguageAvailability, Languages)
       True
     """
-    implements(IModifiableLanguageAvailability)
 
     def __init__(self):
         self.languages = ['en']
@@ -49,6 +49,7 @@ class Languages(SimpleItem, LanguageAvailability):
             self.languages = languages
 
 
+@implementer(IContentLanguages)
 class ContentLanguages(Languages, ContentLanguageAvailability):
     """A local utility storing a list of available content languages.
 
@@ -58,13 +59,13 @@ class ContentLanguages(Languages, ContentLanguageAvailability):
       >>> verifyClass(IContentLanguages, ContentLanguages)
       True
     """
-    implements(IContentLanguages)
 
     id = 'plone_app_content_languages'
     title = 'Manages available content languages'
     meta_type = 'Plone App I18N Content Languages'
 
 
+@implementer(IMetadataLanguages)
 class MetadataLanguages(Languages, MetadataLanguageAvailability):
     """A local utility storing a list of available metadata languages.
 
@@ -74,7 +75,6 @@ class MetadataLanguages(Languages, MetadataLanguageAvailability):
       >>> verifyClass(IMetadataLanguages, MetadataLanguages)
       True
     """
-    implements(IMetadataLanguages)
 
     id = 'plone_app_metadata_languages'
     title = 'Manages available metadata languages'
