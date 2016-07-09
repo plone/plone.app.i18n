@@ -3,11 +3,12 @@
 from plone.app.i18n.locales.interfaces import ICountries
 from plone.i18n.locales.countries import CountryAvailability
 
-from zope.interface import implements
+from zope.interface import implementer
 
 from OFS.SimpleItem import SimpleItem
 
 
+@implementer(ICountries)
 class Countries(SimpleItem, CountryAvailability):
     """A local utility storing a list of available countries.
 
@@ -17,7 +18,6 @@ class Countries(SimpleItem, CountryAvailability):
       >>> verifyClass(ICountries, Countries)
       True
     """
-    implements(ICountries)
 
     id = 'plone_app_countries'
     title = 'Manages available countries'

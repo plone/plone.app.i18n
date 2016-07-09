@@ -1,10 +1,11 @@
-from zope.interface import implements
+from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
 
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 
 
+@implementer(IViewlet)
 class LanguageSelector(BrowserView):
     """Language selector.
 
@@ -80,7 +81,6 @@ class LanguageSelector(BrowserView):
       >>> ls.portal_url()
       'absolute url'
     """
-    implements(IViewlet)
 
     def __init__(self, context, request, view, manager):
         super(LanguageSelector, self).__init__(context, request)
