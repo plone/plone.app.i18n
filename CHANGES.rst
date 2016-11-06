@@ -14,8 +14,12 @@ New features:
 
 Bug fixes:
 
+- Remove zopetestcase.
+  [ivanteoh, maurits]
+
 - Add coding header to pyton files.
   [gforcada]
+
 
 3.0.3 (2016-08-18)
 ------------------
