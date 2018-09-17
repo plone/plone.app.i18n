@@ -22,7 +22,7 @@ Language tests
   >>> old = util.getAvailableLanguages()
   >>> util.setAvailableLanguages((u'en', u'de'))
   >>> util.getAvailableLanguages()
-  [u'en', u'de']
+  ['en', 'de']
 
   >>> util.setAvailableLanguages(old)
 

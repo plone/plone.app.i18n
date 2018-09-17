@@ -53,9 +53,11 @@ class LanguageSelector(BrowserView):
       >>> ls.available()
       True
 
-      >>> ls.languages()
-      [{'code': 'en', 'selected': True}, {'code': 'ar', 'selected': False},
-       {'code': 'nl', 'selected': False}]
+      >>> result = [{'code': 'en', 'selected': True}, {'code': 'ar', 'selected': False},
+      ...           {'code': 'nl', 'selected': False}]
+      >>> ls.languages() == result
+      True
+
       >>> ls.showFlags()
       True
 
@@ -67,10 +69,10 @@ class LanguageSelector(BrowserView):
       >>> ls.available()
       True
 
-      >>> from zope.interface import implements
+      >>> from zope.interface import implementer
       >>> from OFS.interfaces import IItem
-      >>> class Dummy(object):
-      ...     implements(IItem)
+      >>> @implementer(IItem)
+      ... class Dummy(object):
       ...     def getPortalObject(self):
       ...         return self
       ...     def absolute_url(self):

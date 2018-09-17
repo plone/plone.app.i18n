@@ -23,10 +23,10 @@ Country tests.
 
   >>> de = countries[u'de']
   >>> de[u'name']
-  u'Germany'
+  'Germany'
 
   >>> de[u'flag']
-  u'/++resource++country-flags/de.gif'
+  '/++resource++country-flags/de.gif'
 
   >>> old = util.getAvailableCountries()
   >>> countries = ['de']
