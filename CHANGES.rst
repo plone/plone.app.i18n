@@ -14,7 +14,8 @@ New features:
 
 Bug fixes:
 
-- *add item here*
+- Fix tests with py3.
+  [pbauer]
 
 
 3.0.4 (2016-11-19)
