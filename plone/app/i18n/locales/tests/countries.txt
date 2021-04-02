@@ -26,7 +26,7 @@ Country tests.
   'Germany'
 
   >>> de[u'flag']
-  '/++resource++country-flags/de.gif'
+  'countryflag/de'
 
   >>> old = util.getAvailableCountries()
   >>> countries = ['de']
