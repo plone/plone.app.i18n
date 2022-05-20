@@ -85,20 +85,18 @@ class LanguageSelector(BrowserView):
 
     def __init__(self, context, request, view, manager):
         super().__init__(context, request)
-        self.context = context
-        self.request = request
         self.view = view
         self.manager = manager
 
     def update(self):
         self.tool = getToolByName(self.context, "portal_languages", None)
 
-    def available(self):
-        if self.tool is not None:
-            selector = self.tool.showSelector()
-            languages = len(self.tool.getSupportedLanguages()) > 1
-            return selector and languages
-        return False
+    def available(self) -> bool:
+        if self.tool is None:
+            return False
+        selector = self.tool.showSelector()
+        languages = len(self.tool.getSupportedLanguages()) > 1
+        return selector and languages
 
     def portal_url(self):
         portal_tool = getToolByName(self.context, "portal_url", None)
@@ -116,10 +114,7 @@ class LanguageSelector(BrowserView):
 
         def merge(lang, info):
             info["code"] = lang
-            if lang == current:
-                info["selected"] = True
-            else:
-                info["selected"] = False
+            info["selected"] = lang == current
             return info
 
         languages = [
@@ -141,6 +136,6 @@ class LanguageSelector(BrowserView):
 
     def showFlags(self):
         """Do we use flags?."""
-        if self.tool is not None:
-            return self.tool.showFlags
-        return False
+        if self.tool is None:
+            return False
+        return self.tool.showFlags

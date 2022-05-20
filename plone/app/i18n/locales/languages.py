@@ -30,8 +30,7 @@ class Languages(SimpleItem, LanguageAvailability):
             languages = list(self.languages)
             languages.extend(self.combined)
             return languages
-        else:
-            return list(self.languages)
+        return list(self.languages)
 
     def setAvailableLanguages(self, languages, combined=False):
         """Sets a list of available language tags."""
