@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 from plone.app.testing import PLONE_INTEGRATION_TESTING
 from plone.testing import layered
 

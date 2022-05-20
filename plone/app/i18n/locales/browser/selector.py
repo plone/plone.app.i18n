@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.interface import implementer
 from zope.viewlet.interfaces import IViewlet
 
@@ -86,7 +85,7 @@ class LanguageSelector(BrowserView):
     """
 
     def __init__(self, context, request, view, manager):
-        super(LanguageSelector, self).__init__(context, request)
+        super().__init__(context, request)
         self.context = context
         self.request = request
         self.view = view

@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from plone.app.i18n.locales.interfaces import ICountries
 from plone.i18n.locales.countries import CountryAvailability
 
