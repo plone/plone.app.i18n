@@ -1,19 +1,16 @@
+from OFS.SimpleItem import SimpleItem
 from plone.app.i18n.locales.interfaces import IContentLanguages
 from plone.app.i18n.locales.interfaces import IMetadataLanguages
 from plone.app.i18n.locales.interfaces import IModifiableLanguageAvailability
-
 from plone.i18n.locales.languages import ContentLanguageAvailability
-from plone.i18n.locales.languages import MetadataLanguageAvailability
 from plone.i18n.locales.languages import LanguageAvailability
-
+from plone.i18n.locales.languages import MetadataLanguageAvailability
 from zope.interface import implementer
-
-from OFS.SimpleItem import SimpleItem
 
 
 @implementer(IModifiableLanguageAvailability)
 class Languages(SimpleItem, LanguageAvailability):
-    """ A base implementation for persistent utilities implementing
+    """A base implementation for persistent utilities implementing
     IModifiableLanguageAvailability.
 
     Let's make sure that this implementation actually fulfills the API.
@@ -24,12 +21,11 @@ class Languages(SimpleItem, LanguageAvailability):
     """
 
     def __init__(self):
-        self.languages = ['en']
+        self.languages = ["en"]
         self.combined = []
 
     def getAvailableLanguages(self, combined=False):
-        """Returns a sequence of language tags for available languages.
-        """
+        """Returns a sequence of language tags for available languages."""
         if combined:
             languages = list(self.languages)
             languages.extend(self.combined)
@@ -38,8 +34,7 @@ class Languages(SimpleItem, LanguageAvailability):
             return list(self.languages)
 
     def setAvailableLanguages(self, languages, combined=False):
-        """Sets a list of available language tags.
-        """
+        """Sets a list of available language tags."""
         languages = list(languages)
         if combined:
             self.combined = languages
@@ -58,9 +53,9 @@ class ContentLanguages(Languages, ContentLanguageAvailability):
       True
     """
 
-    id = 'plone_app_content_languages'
-    title = 'Manages available content languages'
-    meta_type = 'Plone App I18N Content Languages'
+    id = "plone_app_content_languages"
+    title = "Manages available content languages"
+    meta_type = "Plone App I18N Content Languages"
 
 
 @implementer(IMetadataLanguages)
@@ -74,6 +69,6 @@ class MetadataLanguages(Languages, MetadataLanguageAvailability):
       True
     """
 
-    id = 'plone_app_metadata_languages'
-    title = 'Manages available metadata languages'
-    meta_type = 'Plone App I18N Metadata Languages'
+    id = "plone_app_metadata_languages"
+    title = "Manages available metadata languages"
+    meta_type = "Plone App I18N Metadata Languages"
