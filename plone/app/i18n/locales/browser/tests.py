@@ -3,7 +3,6 @@ from zope.component.testing import tearDown
 
 import doctest
 import re
-import six
 import unittest
 
 
