@@ -1,11 +1,7 @@
-# -*- coding: UTF-8 -*-
-
+from OFS.SimpleItem import SimpleItem
 from plone.app.i18n.locales.interfaces import ICountries
 from plone.i18n.locales.countries import CountryAvailability
-
 from zope.interface import implementer
-
-from OFS.SimpleItem import SimpleItem
 
 
 @implementer(ICountries)
@@ -19,20 +15,18 @@ class Countries(SimpleItem, CountryAvailability):
       True
     """
 
-    id = 'plone_app_countries'
-    title = 'Manages available countries'
-    meta_type = 'Plone App I18N Countries'
+    id = "plone_app_countries"
+    title = "Manages available countries"
+    meta_type = "Plone App I18N Countries"
 
     def __init__(self):
-        self.countries = ['en']
+        self.countries = ["en"]
 
     def getAvailableCountries(self):
-        """Return a sequence of country tags for available countries.
-        """
+        """Return a sequence of country tags for available countries."""
         return list(self.countries)
 
     def setAvailableCountries(self, countries):
-        """Set a list of available country tags.
-        """
+        """Set a list of available country tags."""
         countries = list(countries)
         self.countries = countries
