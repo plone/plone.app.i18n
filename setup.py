@@ -25,7 +25,7 @@ setup(
     ],
     keywords="plone i18n",
     author="Plone Foundation",
-    author_email="releaseteam@plone;org",
+    author_email="releaseteam@plone.org",
     url="https://github.com/plone/plone.app.i18n",
     license="GPL version 2",
     packages=find_packages(),
