@@ -8,6 +8,20 @@ Changelog
 
 .. towncrier release notes start
 
+4.0.0a1 (2022-06-07)
+--------------------
+
+Breaking changes:
+
+
+- Use SVG Flags in Language Selector
+  Update Markup in Language Selector
+  Prepare of use the Icon Resolver in Plone 6.
+  Drop Python 2 and Plone 5.2 support.
+  Pyupgrade, code style Black and Isort.
+  [1letter, jensens] (#8)
+
+
 3.0.6 (2020-04-20)
 ------------------
 
