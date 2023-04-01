@@ -1,8 +1,9 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:five="http://namespaces.zope.org/five">
+    xmlns:five="http://namespaces.zope.org/five"
+    >
 
-    <include package=".locales" />
-    <include package="plone.i18n" />
+  <include package=".locales" />
+  <include package="plone.i18n" />
 
 </configure>

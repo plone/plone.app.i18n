@@ -58,7 +58,7 @@ Bug fixes:
 - Remove zopetestcase.
   [ivanteoh, maurits]
 
-- Add coding header to pyton files.
+- Add coding header to python files.
   [gforcada]
 
 
