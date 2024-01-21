@@ -38,7 +38,7 @@ setup(
         "setuptools",
         "Products.CMFCore",
         "plone.i18n",
-        "zope.viewlet",
+        "Zope",
     ],
     extras_require={
         "test": [
