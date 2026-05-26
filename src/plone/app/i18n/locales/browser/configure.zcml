@@ -3,12 +3,4 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     >
 
-  <browser:viewlet
-      name="plone.app.i18n.locales.languageselector"
-      manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
-      class=".selector.LanguageSelector"
-      template="languageselector.pt"
-      permission="zope2.View"
-      />
-
 </configure>

@@ -32,7 +32,6 @@ setup(
     zip_safe=False,
     python_requires=">=3.10",
     install_requires=[
-        "Products.CMFCore",
         "plone.i18n",
         "Zope",
     ],
