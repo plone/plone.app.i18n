@@ -39,6 +39,7 @@ setup(
         "test": [
             "plone.app.testing",
             "plone.testing",
+            "z3c.jbot",
         ]
     },
 )
