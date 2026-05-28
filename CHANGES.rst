@@ -8,6 +8,15 @@ Changelog
 
 .. towncrier release notes start
 
+6.0.0a2 (2026-05-28)
+--------------------
+
+Bug fixes:
+
+
+- Fix jbot deprecation declaration.  @petschki
+
+
 6.0.0a1 (2026-05-27)
 --------------------
 
