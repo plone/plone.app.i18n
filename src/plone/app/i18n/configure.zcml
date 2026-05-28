@@ -1,9 +1,21 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     >
 
-  <include package=".locales" />
   <include package="plone.i18n" />
+
+  <include
+      package="z3c.jbot"
+      file="meta.zcml"
+      zcml:condition="installed z3c.jbot"
+      />
+
+  <browser:jbotDeprecated
+      dictionary=".jbot_deprecations"
+      zcml:condition="have jbot-deprecations"
+      />
 
 </configure>
